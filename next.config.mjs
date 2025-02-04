@@ -21,7 +21,7 @@ const nextConfig = {
         ],
       },
       productionBrowserSourceMaps: true,
-      // basePath: '/bh'
+      // basePath: '/kw'
 };
 
 export default withNextIntl(nextConfig);

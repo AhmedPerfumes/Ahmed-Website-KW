@@ -39,7 +39,7 @@ export default function Checkout() {
       last_name: '',
       mobile: '',
       email: '',
-      country: 'BH',
+      country: 'KW',
       area: '',
       building: '',
       region: ''
@@ -49,7 +49,7 @@ export default function Checkout() {
       last_name: '',
       mobile: '',
       email: '',
-      country: 'BH',
+      country: 'KW',
       area: '',
       building: '',
       region: ''
@@ -540,9 +540,9 @@ export default function Checkout() {
                         className="form-control form-control-lg search-field__actor"
                         id="country"
                         name="billingAddress.country"
-                        value="Bahrain"
+                        value="Kuwait"
                         readOnly
-                        placeholder="Bahrain"
+                        placeholder="Kuwait"
                       />
                     </div>
                   </div>
@@ -834,7 +834,8 @@ export default function Checkout() {
                     <tr>
                       <th>TOTAL</th>
                       <td>{!freeShippingFlag ? (parseFloat(shippingServiceCharges[0].price) + totalPrice + parseFloat(shippingServiceCharges[1].price)).toFixed(2) :
-                          (0 + totalPrice + parseFloat(shippingServiceCharges[1].price)).toFixed(2)}{ currency.symbol } (includes { !freeShippingFlag ? (
+                          (0 + totalPrice + parseFloat(shippingServiceCharges[1].price)).toFixed(2)}{ currency.symbol }
+                          {/* (includes { !freeShippingFlag ? (
                           (
                             (parseFloat(shippingServiceCharges[0].price) - parseFloat(shippingServiceCharges[0].price) / (1 + parseFloat(vatTax.percentage / 100))) +
                             (parseFloat(totalPrice) - parseFloat(totalPrice) / (1 + parseFloat(vatTax.percentage / 100))) +
@@ -844,7 +845,8 @@ export default function Checkout() {
                             0 +
                             (parseFloat(totalPrice) - parseFloat(totalPrice) / (1 + parseFloat(vatTax.percentage / 100))) +
                             (parseFloat(shippingServiceCharges[1].price) - parseFloat(shippingServiceCharges[1].price) / (1 + parseFloat(vatTax.percentage / 100)))
-                          ).toFixed(2)) }{ currency.symbol } VAT)</td>
+                          ).toFixed(2)) }{ currency.symbol } VAT) */}
+                        </td>
                     </tr>
                   </tbody>
                 </table>
@@ -1004,9 +1006,9 @@ export default function Checkout() {
                           className="form-control form-control-lg search-field__actor"
                           id="country"
                           name="shippingAddress.country"
-                          value="Bahrain"
+                          value="Kuwait"
                           readOnly
-                          placeholder="Bahrain"
+                          placeholder="Kuwait"
                         />
                       </div>
                     </div>
