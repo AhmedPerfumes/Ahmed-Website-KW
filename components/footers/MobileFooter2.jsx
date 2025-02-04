@@ -85,7 +85,7 @@ export default function MobileFooter2() {
         </p>
         <p className="text-center">
           <strong className="fw-medium text-white text-center">
-          +973 3542 8747 / +973 3978 1417
+          +965 51789981 / 60409715
           </strong>
         </p>
 
