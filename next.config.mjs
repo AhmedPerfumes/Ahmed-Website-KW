@@ -12,7 +12,7 @@ const nextConfig = {
           },
           {
             protocol: 'https',
-            hostname: 'admin.ahmedalmaghribi.kw',
+            hostname: 'adminkw.ahmedalmaghribi.com',
           },
           {
             protocol: 'http',
