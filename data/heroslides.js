@@ -280,7 +280,7 @@ export const slidesData33 = [
   //   color: "text-black"
   // },
   {
-    id: 2,
+    id: 3,
     imageSrc: "/assets/images/zumar-bnr.jpg",
     season: "Zumar",
     objectPosition: "70% center",
