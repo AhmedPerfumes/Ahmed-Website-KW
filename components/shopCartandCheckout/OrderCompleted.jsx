@@ -106,7 +106,7 @@ export default function OrderCompleted() {
           </span>
         </div>
         <div className="order-info__item">
-          <label>Paymetn Method</label>
+          <label>Payment Method</label>
           <span>{ orderDetails.payment_method }</span>
         </div>
       </div>
@@ -148,7 +148,8 @@ export default function OrderCompleted() {
               </tr> */}
               <tr>
                 <th>TOTAL</th>
-                <td>{parseFloat(orderDetails.total).toFixed(2)}{ currency.symbol } (includes { orderDetails.shipping_amount > 0 ? (
+                <td>{parseFloat(orderDetails.total).toFixed(2)}{ currency.symbol }
+                  {/* (includes { orderDetails.shipping_amount > 0 ? (
                     (
                       (parseFloat(shippingServiceCharges[0].price) - parseFloat(shippingServiceCharges[0].price) / (1 + parseFloat(vatTax.percentage / 100))) +
                       (parseFloat(orderDetails.sub_total) - parseFloat(orderDetails.sub_total) / (1 + parseFloat(vatTax.percentage / 100))) +
@@ -158,7 +159,7 @@ export default function OrderCompleted() {
                       0 +
                       (parseFloat(orderDetails.sub_total) - parseFloat(orderDetails.sub_total) / (1 + parseFloat(vatTax.percentage / 100))) +
                       (parseFloat(shippingServiceCharges[1].price) - parseFloat(shippingServiceCharges[1].price) / (1 + parseFloat(vatTax.percentage / 100)))
-                    ).toFixed(2)) }{ currency.symbol } VAT)
+                    ).toFixed(2)) }{ currency.symbol } VAT) */}
                 </td>
               </tr>
             </tbody>
