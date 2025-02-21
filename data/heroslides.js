@@ -236,14 +236,24 @@ export const slidesData2 = [
   },
 ];
 export const slidesData3 = [
+  // {
+  //   id: 1,
+  //   imageSrc: "/assets/images/banner/kw-sale.jpg",
+  //   season: "",
+  //   objectPosition: "50% center",
+  //   title: "",
+  //   subtitle: "",
+  //   href: "shop/",
+  //   color: "text-black"
+  // },
   {
-    id: 1,
-    imageSrc: "/assets/images/banner/kw-sale.jpg",
-    season: "",
+    id: 2,
+    imageSrc: "/assets/images/home/la-rose.jpg",
+    season: "La Rosee",
     objectPosition: "50% center",
-    title: "",
-    subtitle: "",
-    href: "shop/",
+    title: "Feel Luxurious",
+    subtitle: "with",
+    href: "shop/perfumes/occidental-fragrance/la-rosee",
     color: "text-black"
   },
   {
@@ -259,26 +269,26 @@ export const slidesData3 = [
   
 ];
 export const slidesData33 = [
-  {
-    id: 1,
-    imageSrc: "/assets/images/banner/kw-mobile.jpg",
-    season: "",
-    objectPosition: "50% center",
-    title: "",
-    subtitle: "",
-    href: "shop/",
-    color: "text-black"
-  },
   // {
   //   id: 1,
-  //   imageSrc: "/assets/images/home/la-rose.jpg",
-  //   season: "La Rosee",
+  //   imageSrc: "/assets/images/banner/kw-mobile.jpg",
+  //   season: "",
   //   objectPosition: "50% center",
-  //   title: "Feel Luxurious",
-  //   subtitle: "with",
-  //   href: "shop/perfumes/occidental-fragrance/la-rosee",
+  //   title: "",
+  //   subtitle: "",
+  //   href: "shop/",
   //   color: "text-black"
   // },
+  {
+    id: 2,
+    imageSrc: "/assets/images/home/la-rose.jpg",
+    season: "La Rosee",
+    objectPosition: "50% center",
+    title: "Feel Luxurious",
+    subtitle: "with",
+    href: "shop/perfumes/occidental-fragrance/la-rosee",
+    color: "text-black"
+  },
   {
     id: 3,
     imageSrc: "/assets/images/zumar-bnr.jpg",
