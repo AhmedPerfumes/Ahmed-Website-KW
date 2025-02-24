@@ -215,6 +215,9 @@ export default function Checkout() {
         // localStorage.setItem('orderData', btoa(JSON.stringify(data)));
         router.push(data.redirect_url);
       } else {
+        if(data.message) {
+          setError(data.message);
+        }
         if(data.products) {
           setError(data.products);
         }
