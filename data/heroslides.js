@@ -236,16 +236,16 @@ export const slidesData2 = [
   },
 ];
 export const slidesData3 = [
-  // {
-  //   id: 1,
-  //   imageSrc: "/assets/images/banner/kw-sale.jpg",
-  //   season: "",
-  //   objectPosition: "50% center",
-  //   title: "",
-  //   subtitle: "",
-  //   href: "shop/",
-  //   color: "text-black"
-  // },
+  {
+    id: 1,
+    imageSrc: "/assets/images/banner/kuwait-national-day.jpg",
+    season: "",
+    objectPosition: "50% center",
+    title: "",
+    subtitle: "",
+    href: "shop/",
+    color: "text-black"
+  },
   {
     id: 2,
     imageSrc: "/assets/images/home/la-rose.jpg",
@@ -269,16 +269,16 @@ export const slidesData3 = [
   
 ];
 export const slidesData33 = [
-  // {
-  //   id: 1,
-  //   imageSrc: "/assets/images/banner/kw-mobile.jpg",
-  //   season: "",
-  //   objectPosition: "50% center",
-  //   title: "",
-  //   subtitle: "",
-  //   href: "shop/",
-  //   color: "text-black"
-  // },
+  {
+    id: 1,
+    imageSrc: "/assets/images/banner/kuwait-national-day-mobile.jpg",
+    season: "",
+    objectPosition: "50% center",
+    title: "",
+    subtitle: "",
+    href: "shop/",
+    color: "text-black"
+  },
   {
     id: 2,
     imageSrc: "/assets/images/home/la-rose.jpg",
