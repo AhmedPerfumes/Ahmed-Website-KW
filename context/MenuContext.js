@@ -10,6 +10,8 @@ export function MenuProvider({ children }) {
   const [currency, setCurrency] = useState('د.إ');
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [homeSliders, setHomeSliders] = useState([]);
+  const [homeMobileSliders, setHomeMobileSliders] = useState([]);
 
   useEffect(() => {
     async function getCategoriesSubCategories() {
@@ -52,6 +54,21 @@ export function MenuProvider({ children }) {
             setshippingServiceCharges(null);
             setError(data);
           }
+          if(data && data.home_sliders) {
+            setError(null);
+            setHomeSliders(data.home_sliders);
+          } else {
+            setHomeSliders(null);
+            setError(data);
+          }
+
+          if(data && data.home_mobile_sliders) {
+            setError(null);
+            setHomeMobileSliders(data.home_mobile_sliders);
+          } else {
+            setHomeMobileSliders(null);
+            setError(data);
+          }
 
           if(data && data.currency) {
             setError(null);
@@ -76,7 +93,7 @@ export function MenuProvider({ children }) {
   }, []);
 
   return (
-    <MenuContext.Provider value={{ categoriesSubCategories, isLoading, error, vatTax, shippingServiceCharges, currency }}>
+    <MenuContext.Provider value={{ categoriesSubCategories, isLoading, error, vatTax, shippingServiceCharges, currency, homeSliders, homeMobileSliders }}>
       {children}
     </MenuContext.Provider>
   );
