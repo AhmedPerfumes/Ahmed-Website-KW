@@ -89,7 +89,7 @@ const thresholds = [
   //   ],
   // },
   {
-    min: 40,
+    min: 25,
     gifts: [
       // {
       //   product_id: 182,
