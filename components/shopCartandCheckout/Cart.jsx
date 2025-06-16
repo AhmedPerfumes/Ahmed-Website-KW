@@ -197,33 +197,7 @@ export default function Cart() {
                         </div>
                       </div> : 1}
                     </td>
-                    <td>
-                      <div className="qty-control position-relative">
-                        <input
-                          type="number"
-                          name="quantity"
-                          value={elm.quantity}
-                          min={1}
-                          onChange={(e) =>
-                            setQuantity(elm.product_id, e.target.value / 1, elm.product_qty)
-                          }
-                          className="qty-control__number text-center"
-                          readOnly
-                        />
-                        <div
-                          onClick={() => setQuantity(elm.product_id, elm.quantity - 1, elm.product_qty)}
-                          className="qty-control__reduce"
-                        >
-                          -
-                        </div>
-                        <div
-                          onClick={() => setQuantity(elm.product_id, elm.quantity + 1, elm.product_qty)}
-                          className="qty-control__increase"
-                        >
-                          +
-                        </div>
-                      </div>
-                    </td>
+                    
                     <td>
                       
                         { subTotalPrice(elm) }
