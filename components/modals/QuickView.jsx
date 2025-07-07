@@ -108,7 +108,7 @@ export default function QuickView() {
         return <span className="money price">{elm?.price}{ currency.symbol }</span>;
       }
     } else if(elm?.sale_price) {
-      return <><span className="money price price-sale">{ currency.symbol }{(elm.price - (elm.price / 100 * elm.sale_price)).toFixed(currency.decimals)}</span><span className="money price price-old">{ currency.symbol }{elm?.price}</span> </>;
+      return <><span className="money price price-sale">{ currency.symbol }{(elm.sale_price).toFixed(currency.decimals)}</span><span className="money price price-old">{ currency.symbol }{elm?.price}</span> </>;
     } else {
       return <span className="money price">{elm?.price}{ currency.symbol }</span>;
     }

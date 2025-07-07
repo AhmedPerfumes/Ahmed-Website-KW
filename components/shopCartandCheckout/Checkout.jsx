@@ -500,7 +500,7 @@ export default function Checkout() {
       }
     } else if(elm?.sale_price) {
       console.log('else if 2');
-      return <td>{((elm.price - (elm.price / 100 * elm.sale_price)) * elm.quantity).toFixed(currency.decimals)}{ currency.symbol }</td>;
+      return <td>{((elm.sale_price * elm.quantity)).toFixed(currency.decimals)}{ currency.symbol }</td>;
     } else {
       console.log('else');
       return <td>{(elm.price * elm.quantity).toFixed(currency.decimals)}{ currency.symbol }</td>;

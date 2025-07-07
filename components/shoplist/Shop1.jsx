@@ -197,7 +197,7 @@ useEffect(() => {
         return <span className="money price">{elm?.price}{ currency.symbol }</span>;
       }
     } else if(elm?.sale_price) {
-      return <><span className="money price price-old">{elm?.price}{ currency.symbol }</span> <span className="money price price-sale"> {(elm.price - (elm.price / 100 * elm.sale_price)).toFixed(currency.decimals)}{ currency.symbol }</span></>;
+      return <><span className="money price price-old">{elm?.price}{ currency.symbol }</span> <span className="money price price-sale"> {(elm.sale_price).toFixed(currency.decimals)}{ currency.symbol }</span></>;
     } else {
       return <span className="money price">{elm?.price}{ currency.symbol }</span>;
     }

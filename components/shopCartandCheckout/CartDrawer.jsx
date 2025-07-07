@@ -59,7 +59,7 @@ export default function CartDrawer() {
         return <span className="cart-drawer-item__price money price">{(elm.price * elm.quantity).toFixed(currency.decimals)}{ currency.symbol }</span>;
       }
     } else if(elm?.sale_price) {
-      return <span className="cart-drawer-item__price money price">{((elm.price - (elm.price / 100 * elm.sale_price)) * elm.quantity).toFixed(currency.decimals)}{ currency.symbol }</span>;
+      return <span className="cart-drawer-item__price money price">{((elm.sale_price) * elm.quantity).toFixed(2)}{ currency.symbol }</span>;
     } else {
       return <span className="cart-drawer-item__price money price">{(elm.price * elm.quantity).toFixed(currency.decimals)}{ currency.symbol }</span>;
     }
@@ -201,7 +201,7 @@ export default function CartDrawer() {
           <hr className="cart-drawer-divider" />
           <div className="d-flex justify-content-between">
             <h6 className="fs-base fw-medium">SUBTOTAL:</h6>
-            <span className="cart-subtotal fw-medium">{totalPrice.toFixed(currency.decimals)}{ currency.symbol }</span>
+            <span className="cart-subtotal fw-medium">{totalPrice}{ currency.symbol }</span>
           </div>
           {cartProducts.length ? (
             <>
