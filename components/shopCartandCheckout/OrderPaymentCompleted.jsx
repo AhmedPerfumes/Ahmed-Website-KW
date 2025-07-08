@@ -90,7 +90,7 @@ export default function OrderPaymentCompleted({ orderDetails }) {
           </span>
         </div>
         <div className="order-info__item">
-          <label>Paymetn Method</label>
+          <label>Payment Method</label>
           <span>{ orderDetails.payment_method }</span>
         </div>
       </div>
