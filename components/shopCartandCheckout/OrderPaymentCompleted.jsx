@@ -41,7 +41,11 @@ export default function OrderPaymentCompleted({ orderDetails }) {
     } else if(elm?.sale_price) {
         return <td>{(((elm.price * 1.05) - (elm.sale_price)) * elm.qty).toFixed(currency.decimals)}{ currency.symbol }</td>;
     } else {
-        return <td>{((elm.price * 1) * elm.qty).toFixed(currency.decimals)}{ currency.symbol }</td>;
+        console.log('else');
+        if(elm?.product_category && elm.product_category == 'Collections') {
+          return <td>{ elm.gross_amount }{ currency.symbol }</td>;
+        }
+        return <td>{((elm.price * 1.05) * elm.qty).toFixed(2)}{ currency.symbol }</td>;
     }
   };
 
