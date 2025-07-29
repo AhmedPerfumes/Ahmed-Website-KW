@@ -11,6 +11,8 @@ import { useMenu } from '@/context/MenuContext';
 import Link from "next/link";
 
 export default function TopCollections({ categoryId,title,category,sub_category}) {
+
+  
   const { isLoading: isMenuLoading, error: isMenuError, currency } = useMenu();
   const locale = useLocale();
   const { toggleWishlist, isAddedtoWishlist, setQuickViewItem, addProductToCart, isAddedToCartProducts } = useContextElement();
@@ -95,37 +97,29 @@ export default function TopCollections({ categoryId,title,category,sub_category}
   };
 
   const price = (elm) => {
-    const currentUTC = new Date();
-    const currentGST = new Date(currentUTC.getTime() + (4 * 60 * 60 * 1000));
+   
+    const currentUTC = new Date(); // Current UTC time
+    const currentGST = new Date(currentUTC.getTime() + (4 * 60 * 60 * 1000)); // Add 4 hours for GST
     const current_date_time = currentGST.toISOString().slice(0, 19).replace("T", " ");
+    if(elm?.discount) {
+      if(new Date(current_date_time) >= new Date(elm.discount.start_date) && new Date(current_date_time) <= new Date(elm.discount.end_date)) {
+        return <><span className="money price price-old">{elm?.price}{ currency.symbol }</span> <span className="money price price-sale"> {(elm.price - (elm.price / 100 * elm.discount.value)).toFixed(currency.decimals)}{ currency.symbol }</span></>;
 
-    if (elm?.discount) {
-      const start = new Date(elm.discount.start_date);
-      const end = new Date(elm.discount.end_date);
-      if (currentGST >= start && currentGST <= end) {
-        const discountedPrice = (elm.price - (elm.price * elm.discount.value / 100)).toFixed(2);
-        return (
-          <>
-            <span className="money price price-old">{elm.price}{currency.symbol}</span>
-            <span className="money price price-sale">{discountedPrice}{currency.symbol}</span>
-          </>
-        );
+      } else {
+        return <span className="money price">{elm?.price}{ currency.symbol }</span>;
       }
-    } else if (elm?.sale_price) {
-      const discountedPrice = (elm.price - (elm.price * elm.sale_price / 100)).toFixed(2);
-      return (
-        <>
-          <span className="money price price-old">{elm.price}{currency.symbol}</span>
-          <span className="money price price-sale">{discountedPrice}{currency.symbol}</span>
-        </>
-      );
+    } else if(elm?.sale_price) {
+      console.log("10001",elm.sale_price);
+      
+      return <><span className="money price price-old">{elm?.price}{ currency.symbol }</span> <span className="money price price-sale"> {((elm.sale_price))}{ currency.symbol }</span></>;
+    } else {
+      return <span className="money price">{elm?.price}{ currency.symbol }</span>;
     }
-
-    return <span className="money price">{elm?.price}{currency.symbol}</span>;
   };
 
   if (isMenuLoading) return <Pagination1 />;
   if (isMenuError) return <div>{isMenuError}</div>;
+  
 
   return loading ? <Pagination1 /> : (
     <div>
@@ -171,14 +165,15 @@ export default function TopCollections({ categoryId,title,category,sub_category}
                         </div>
                       )}
 
-                      {elm.product_qty <= 0 ? (
+        {elm.product_qty <= 0 ? (
                         <div style={{ backgroundColor: '#dc3545' }} className="product-label text-uppercase text-white top-0 left-0 mt-2 mx-2">
-                          Out Of Stock
+                          {t("Out Of Stock")}
                         </div>
                       ) : (
                         elm.discount && (
                           <div style={{ backgroundColor: '#198754' }} className="product-label text-uppercase text-white top-0 left-0 mt-2 mx-2">
                             Sale {elm.discount.value}%
+                            
                           </div>
                         )
                       )}
