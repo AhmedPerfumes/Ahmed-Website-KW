@@ -49,8 +49,8 @@ function CityWalk() {
       <div className="d-flex flex-column justify-content-around align-items-center text-center px-3">
         <div className="section-head pt-5 pb-3 text-uppercase w-100">
           <h2 className="text-center">
-            <span className="d-block h3 h3-sm h2-md">Essence of Bakhoor</span>
-            <span className="d-block text-uppercase h3 h3-sm h3-md">Experience its timeless aroma.</span>
+            <span className="d-block h3 h3-sm h2-md">Essence of Perfume</span>
+            <span className="d-block text-uppercase h3 h3-sm h3-md">Experience its timeless Scent.</span>
           </h2>
         </div>
 
