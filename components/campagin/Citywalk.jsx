@@ -162,7 +162,7 @@ function CityWalk() {
                             height={0}
                             sizes="100%"
                             className="img-fluid"
-                            src="/assets/images/campaigns/zumar.jpg"
+                            src="/assets/images/campaigns/Zumar.jpg"
                             alt="Aazz-O-Azeez Gift Set"
                             loading="lazy"
                             style={{ width: "100%", height: "auto" }}
