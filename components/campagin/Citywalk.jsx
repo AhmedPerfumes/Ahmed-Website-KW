@@ -19,11 +19,11 @@ function CityWalk() {
             {/* Hero Section */}
             <div>
             <div className="container-fluid p-0 pt-2">
-                <Link href={`/${locale}/product-category/dakhoon`}>
+                <Link href={`/${locale}/product-category/perfumes`}>
                     <Image
                         loading="lazy"
                         className="w-100 h-auto d-none d-lg-block"
-                        src="/assets/images/campaigns/Web-banner.jpg"
+                        src="/assets/images/campaigns/Kwait-Summer-sale.jpg"
                         alt="Father's Day Web"
                         width={1500}
                         height={550}
@@ -31,11 +31,11 @@ function CityWalk() {
                 </Link>
             </div>
             <div className="container-fluid p-0 pt-2">
-                <Link href={`/${locale}/product-category/dakhoon`}>
+                <Link href={`/${locale}/product-category/perfumes`}>
                     <Image
                         loading="lazy"
                         className="w-100 h-auto d-lg-none"
-                        src="/assets/images/campaigns/mobile-banner.jpg"
+                        src="/assets/images/campaigns/Kwait-Summer-sale-mobile-size.jpg"
                         alt="Father's Day Mobile"
                         width={1500}
                         height={550}
@@ -45,7 +45,7 @@ function CityWalk() {
         </div>
         <section className="section-3">
   <div className="w-100">
-    <div className="section-content">
+    <div className="section-content mt-5 pt-5">
       <div className="d-flex flex-column justify-content-around align-items-center text-center px-3">
         <div className="section-head pt-5 pb-3 text-uppercase w-100">
           <h2 className="text-center">
@@ -57,21 +57,21 @@ function CityWalk() {
         {/* Desktop Video */}
         <div className="d-none d-md-block pb-3 w-100">
           <div className="videoarea d-flex justify-content-center">
-            <VideoPanel src="/assets/videos/Dakhoon.mp4" section="" />
+            <VideoPanel src="/assets/videos/Summer-Sale.mp4" section="" />
           </div>
         </div>
 
         {/* Mobile Video */}
         <div className="d-block d-sm-none pb-3 w-100">
           <div className="videoarea d-flex justify-content-center">
-            <VideoPanel src="/assets/videos/mobile video.mp4" section="hundred" />
+            <VideoPanel src="/assets/videos/Summer-Mob.mp4" section="hundred" />
           </div>
         </div>
 
         {/* Button */}
         <div className="pt-3">
           <Link
-            href={`/${locale}/product-category/dakhoon/oud-maattar`}
+            href={`/${locale}/shop`}
             className="btn-link btn-link_lg default-underline text-uppercase fw-medium"
           >
             Shop Now
@@ -127,7 +127,7 @@ function CityWalk() {
                             height={0}
                             sizes="100%"
                             className="img-fluid"
-                            src="/assets/images/campaigns/oud-amber.jpg"
+                            src="/assets/images/campaigns/bin-shaikh.jpg"
                             alt="Wedding products display"
                             loading="lazy"
                             style={{ width: "100%", height: "auto" }}
@@ -138,14 +138,14 @@ function CityWalk() {
                     {/* Text column - shown second on mobile/tablet, first on desktop */}
                     <div className="col-md-6 text-center px-md-5 mb-2 order-2 order-md-1">
                         <p className="fs-2 text-uppercase font-weight-bold mb-3">
-                           Oud Amber
+                           Bin Shaikh
                         </p>
                         <p className="fs-6 mb-3">
-                        The combination of oud and amber creates a fragrance that is both opulent and balanced. The oud brings a smoky, leathery edge, while the amber adds a smooth, golden warmth. This balance of darkness and light gives Oud Amber its richness and depth.
+                        Like priceless wisdom passed down over the ages, the Bin Shaikh was passed down from our forefathers, making this vintage scent a truly priceless work of art. An exotic blend of distinct aromas.A strong sweet and spicy mixture of patchouli, and the sturdy taste of agarwood, provides you with the enduring smell of the sweet-earthy aroma of Ambroxan, in addition to base notes the cologne is sparkled up with a crispy and fresh hint of musk white and finally ending up with the sensual and exotic rich aroma of amber resins.
                         </p>
                         <a
                             className="btn-link btn-link_lg default-underline text-uppercase fw-medium"
-                            href={`/${locale}/shop/dakhoon/oud-maattar/oud-al-amber-3tl`}
+                            href={`/${locale}/shop/perfumes/oriental-fragrance/bin-shaikh`}
                         >
                             Shop Now
                         </a>
@@ -162,7 +162,7 @@ function CityWalk() {
                             height={0}
                             sizes="100%"
                             className="img-fluid"
-                            src="/assets/images/campaigns/rasiyaat.jpg"
+                            src="/assets/images/campaigns/zumar.jpg"
                             alt="Aazz-O-Azeez Gift Set"
                             loading="lazy"
                             style={{ width: "100%", height: "auto" }}
@@ -173,14 +173,14 @@ function CityWalk() {
                     {/* Text column - shown second on desktop, first on mobile/tablet */}
                     <div className="col-md-6 text-center px-md-5 mb-2 order-2 order-md-2">
                         <p className="fs-2 text-uppercase font-weight-bold mb-3">
-                        Bakhoor Rasiyat
+                        Zumar
                         </p>
                         <p className="fs-6 mb-3">
-                        Bakhoor Rasiyat is a rich, earthy blend that fills your space with deep, woody notes and a hint of spice, creating a warm and inviting atmosphere rooted in traditional Arabian luxury.
+                        This captivating fragrance opens with tantalizing top notes of saffron, lending a rich, aromatic depth; pear and red berries add a refreshing sweetness that awakens the senses; and Kinam oud accord creates a delightful interplay of fruity and aromatic elements. As the fragrance evolves, it reveals a stunning floral heart composed of gardenia, jasmine, Bulgarian rose, Rose Grasse, and frangipani, enveloping the wearer in a romantic and enchanting aura.
                         </p>
                         <a
                             className="btn-link btn-link_lg default-underline text-uppercase fw-medium"
-                            href={`/${locale}/shop/dakhoon/bakhoor/bakhoor-rasiyat`}
+                            href={`/${locale}/shop/perfumes/oriental-fragrance/zumar`}
                         >
                             Shop Now
                         </a>
@@ -188,7 +188,7 @@ function CityWalk() {
                 </div>
             </div>
 
-            <TopCollections categoryId={12} category={"dakhoon"} sub_category={"bakhoor"} title={"Indulge in the Rich Aroma of Bakhoor"}/>
+            <TopCollections categoryId={9} category={"perfumes"} sub_category={"Oriental Fragrance"} title={"Discover Your Signature Scent"}/>
             <section className="d-flex flex-column align-items-center pt-5">
                             <span className="t-subtitle text-uppercase fs-4 text-center">
                                 {"Unveil the Charm of Traditional Bakhoor"}
@@ -211,7 +211,7 @@ function CityWalk() {
                                     <div className="d-flex justify-content-center pt-3">
                                         <Link
                                             href={`/${locale}/shop/dakhoon/bakhoor/bakhoor-marj`}
-                                            className="btn-rounded btn-link_lg text-uppercase fw-medium "
+                                            className="btn-link btn-link_lg default-underline text-uppercase fw-medium"
                                         >
                                             {t("Shop Now")}
                                         </Link>
@@ -233,7 +233,7 @@ function CityWalk() {
                                     <div className="d-flex justify-content-center pt-3">
                                         <Link
                                             href={`/${locale}/shop/dakhoon/bakhoor/bakhoor-oud-roses`}
-                                            className="btn-rounded btn-link_lg text-uppercase fw-medium "
+                                           className="btn-link btn-link_lg default-underline text-uppercase fw-medium"
                                         >
                                             {t("Shop Now")}
                                         </Link>
@@ -259,7 +259,7 @@ function CityWalk() {
                                     
                                 <Link
                                             href={`/${locale}/shop/dakhoon/bakhoor/bakhoor-marj`}
-                                            className="btn-rounded btn-link_lg text-uppercase fw-medium "
+                                            className="btn-link btn-link_lg default-underline text-uppercase fw-medium"
                                         >
                                             {t("Shop Now")}
                                         </Link>
@@ -277,14 +277,14 @@ function CityWalk() {
                                 <div className="d-flex justify-content-center pt-3">
                                     <Link
                                         href={`/${locale}/shop/dakhoon/bakhoor/bakhoor-oud-roses`}
-                                        className="btn-rounded btn-link_lg text-uppercase fw-medium "
+                                       className="btn-link btn-link_lg default-underline text-uppercase fw-medium"
                                     >
                                         {t("Shop Now")}
                                     </Link>
                                 </div>
                             </div>
                         </section>
-                        <TopCollections categoryId={14} category={"dakhoon"} sub_category={"oud-maattar"} title={"The Essence of Oud Ma'Attar"}/>
+                        <TopCollections categoryId={11} category={"Concentrated Parfum"} sub_category={"Concentrated Oil"} title={"Intense Fragrance Elixir"}/>
                         
 
             {/* <Contact_campaign/> */}
