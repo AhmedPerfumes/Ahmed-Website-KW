@@ -99,7 +99,7 @@ export default function NewsLetter() {
                 </p>
                 <a
                   className="btn-link btn-link_lg default-underline text-uppercase fw-medium"
-                  href={`/${locale}/shop/perfumes/oriental-fragrance/Kawkab`}
+                  href={`/${locale}/shop`}
                 >
                   Shop Now
                 </a>
