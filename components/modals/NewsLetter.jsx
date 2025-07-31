@@ -32,7 +32,7 @@ export default function NewsLetter() {
 
     // Handle scroll event
     const handleScroll = () => {
-      if (window.scrollY > 3500 && !hasScrolled) {
+      if (window.scrollY > 2500 && !hasScrolled) {
         showModal();
       }
     };
@@ -79,7 +79,7 @@ export default function NewsLetter() {
                   height={650}
                   style={{ height: "fit-content" }}
                   loading="lazy"
-                  src="/assets/images/home/demo8/Kawkab-Web-banner.jpg"
+                  src="/assets/images/campaigns/FreeDelivery.jpg"
                   className="h-100 w-100 object-fit-cover d-block"
                   alt="image"                
                   />
@@ -90,10 +90,10 @@ export default function NewsLetter() {
             <div className="col-md-4 p-0 d-flex align-items-center text-center">
               <div className="block-newsletter w-100">
               <h3 className="section-title fw-normal mb-3 pb-2" style={{ color: '#cfa91a' }}>
-                  Kawkab
+              Free Delivery on All Orders!
                 </h3>
                 <p>
-                Kawkab is a captivating oriental fragrance that embodies the essence of the stars. With its rich and warm notes, it transports you to a celestial realm, evoking a sense of mystery and allure. Perfect for those who seek to leave a lasting impression, Kawkab is a fragrance that shines brightly in any collection.
+                Enjoy seamless shopping with free delivery across the KW.
                   {/* <b className="sub-title">Don't miss out.</b> */}
 
                 </p>
