@@ -56,7 +56,7 @@ export const socialLinks = [
     icon: "#icon_facebook",
   },
   {
-    href: "https://www.instagram.com/ahmedalmaghribiperfumes/",
+    href: "https://www.instagram.com/ahmedalmaghribiperfumeskw/",
     className: "svg-icon svg-icon_instagram",
     width: 14,
     height: 13,
