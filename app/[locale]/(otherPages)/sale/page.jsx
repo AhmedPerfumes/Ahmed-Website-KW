@@ -7,7 +7,7 @@ import Header14 from "@/components/headers/Header14";
 
 import React from "react";
 // import Loader from "@/components/loader/Loader";
-import CityWalk from "@/components/campagin/Citywalk";
+import Sale from "@/components/campagin/Sale";
 
 export const metadata = {
   title: "Buy Best Perfumes Online | Ahmed Al Maghribi Perfumes",
@@ -22,7 +22,7 @@ const Citywalk = () => {
     <>
       {/* <Loader/> */}
       <Header14 />
-   <CityWalk/>
+<Sale/>
     
       <section className="d-none d-lg-block" style={{ height: "100%" }}>
         <Footer14 />
