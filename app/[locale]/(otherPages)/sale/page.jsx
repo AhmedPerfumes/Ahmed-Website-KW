@@ -7,7 +7,7 @@ import Header14 from "@/components/headers/Header14";
 
 import React from "react";
 // import Loader from "@/components/loader/Loader";
-import Sale from "@/components/campagin/Sale";
+import Sale from "@/components/campagin/Citywalk";
 
 export const metadata = {
   title: "Buy Best Perfumes Online | Ahmed Al Maghribi Perfumes",
