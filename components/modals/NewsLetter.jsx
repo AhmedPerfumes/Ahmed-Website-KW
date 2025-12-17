@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
-import { useLocale } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import VideoPanel from "../VideoPanel";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -13,6 +13,7 @@ export default function NewsLetter() {
   const [hasScrolled, setHasScrolled] = useState(false);
   const locale = useLocale();
   let modalInstance = null;
+  const t = useTranslations();
 
   useEffect(() => {
     const bootstrap = require("bootstrap");
@@ -90,10 +91,10 @@ export default function NewsLetter() {
             <div className="col-md-4 p-0 d-flex align-items-center text-center">
               <div className="block-newsletter w-100">
               <h3 className="section-title fw-normal mb-3 pb-2" style={{ color: '#cfa91a' }}>
-              Free Delivery on All Orders!
+              {t("Free Delivery on All Orders!")}
                 </h3>
                 <p>
-                Enjoy seamless shopping with free delivery across the KW.
+                {t("Enjoy seamless shopping with free delivery across the KW")}
                   {/* <b className="sub-title">Don't miss out.</b> */}
 
                 </p>
@@ -101,7 +102,7 @@ export default function NewsLetter() {
                   className="btn-link btn-link_lg default-underline text-uppercase fw-medium"
                   href={`/${locale}/shop`}
                 >
-                  Shop Now
+                  {t("Shop Now")}
                 </a>
               </div>
             </div>
