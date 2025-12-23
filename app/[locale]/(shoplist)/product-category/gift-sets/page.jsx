@@ -31,7 +31,7 @@ async function getCategorySubCategory(categoryName) {
       category: categoryName.split("-").join(" ").toUpperCase(),
     }),
     next: {
-      tags: ["giftSets"],
+      tags: ["categories", `category-${slug}`],
       revalidate: 604800 // 7 days
     },
   });

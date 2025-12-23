@@ -32,7 +32,7 @@ async function getCategorySubCategory(categoryName, subCategoryName) {
       subCategory: subCategoryName.split("-").join(" ").toUpperCase(),
     }),
     next: {
-      tags: ["subcategories"],
+      tags: ["subCategories", `category-${catSlug}`, `subcategory-${subSlug}`],
       revalidate: 604800 // 7 days
     },
   });
