@@ -30,6 +30,7 @@ async function getCategorySubCategory(categoryName) {
   //     category: categoryName.split("-").join(" ").toUpperCase(),
   //   })
   // });
+  const slug = categoryName.toLowerCase();
   const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}api/products`, { 
     method: 'POST',
     headers: {

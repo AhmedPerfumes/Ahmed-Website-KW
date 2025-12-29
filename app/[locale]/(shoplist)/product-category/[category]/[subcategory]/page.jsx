@@ -21,6 +21,8 @@ import CollapsibleDescription from "@/components/shoplist/CollapsibleDescription
 // };
 
 async function getCategorySubCategory(categoryName, subCategoryName) {
+  const catSlug = categoryName.toLowerCase();
+  const subSlug = subCategoryName.toLowerCase();
   // console.log(`${process.env.NEXT_PUBLIC_API_URL}api/products?category=${categoryName.split("-").join(" ").toUpperCase()}&subCategory=${subCategoryName.split("-").join(" ").toUpperCase()}`);
   const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}api/products`, {
     method: 'POST',

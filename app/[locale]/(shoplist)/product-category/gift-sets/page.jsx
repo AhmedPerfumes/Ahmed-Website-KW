@@ -22,6 +22,7 @@ export const metadata = {
 };
 
 async function getCategorySubCategory(categoryName) {
+  const slug = categoryName.toLowerCase();
   const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}api/products`, { 
     method: 'POST',
     headers: {
