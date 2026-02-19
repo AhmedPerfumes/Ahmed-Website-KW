@@ -23,9 +23,13 @@ async function getBlog(blogName) {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
-      blog: blogName.split("-").join(" ").toUpperCase(),
+      // blog: blogName.split("-").join(" ").toUpperCase(),
+      blog: blogName,
     }),
-    cache: 'no-store',
+    next: {
+      tags: ["blogs"],
+      revalidate: 604800 // 7 days
+    },
   });
   if (!response.ok) {
     throw new Error('Network response was not ok');
@@ -55,7 +59,10 @@ async function getBlogSEO(blogName) {
           body: JSON.stringify({
             blog: blogName.split("-").join(" ").toUpperCase(),
           }),
-          cache: "no-store",
+          next: {
+            tags: ["blogSEO"],
+            revalidate: 604800 // 7 days
+          },
       }
   );
   
@@ -72,7 +79,7 @@ export async function generateMetadata({ params }) {
 
     try {
         const data = await getBlogSEO(blogName);
-        console.log(JSON.parse(data.meta_value)[0]);
+        // console.log(JSON.parse(data.meta_value)[0]);
         return {
             title: JSON.parse(data.meta_value)[0]?.seo_title ? `${JSON.parse(data.meta_value)[0]?.seo_title}` : "Buy Best Perfumes Online | Ahmed Al Maghribi Perfumes",
             description: JSON.parse(data.meta_value)[0]?.seo_description ? JSON.parse(data.meta_value)[0]?.seo_description?.replace(/<\/?[^>]+(>|$)/g, "").trim() : "Buy Best Perfumes Online Ahmed Al Maghribi Perfumes."

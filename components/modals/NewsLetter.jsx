@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
-import { useLocale } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import VideoPanel from "../VideoPanel";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -13,6 +13,7 @@ export default function NewsLetter() {
   const [hasScrolled, setHasScrolled] = useState(false);
   const locale = useLocale();
   let modalInstance = null;
+  const t = useTranslations();
 
   useEffect(() => {
     const bootstrap = require("bootstrap");
@@ -32,7 +33,7 @@ export default function NewsLetter() {
 
     // Handle scroll event
     const handleScroll = () => {
-      if (window.scrollY > 3500 && !hasScrolled) {
+      if (window.scrollY > 2500 && !hasScrolled) {
         showModal();
       }
     };
@@ -70,16 +71,16 @@ export default function NewsLetter() {
             className="btn-close"
             aria-label="Close"
           ></button>
-          <div className="row p-0 m-0">
+         <div className="row p-0 m-0">
             <div className="col-md-8 p-0">
               <div className="newsletter-popup__bg h-100 w-100">
-              <a href={`/${locale}/shop/perfumes/oriental-fragrance/zumar`}>
+              <a href={`/${locale}/shop/perfumes/oriental-fragrance/kawkab`}>
                 <Image
                   width={550}
                   height={650}
                   style={{ height: "fit-content" }}
                   loading="lazy"
-                  src="/assets/images/home/demo8/zumar.jpg"
+                  src="/assets/images/campaigns/FreeDelivery.jpg"
                   className="h-100 w-100 object-fit-cover d-block"
                   alt="image"                
                   />
@@ -90,18 +91,18 @@ export default function NewsLetter() {
             <div className="col-md-4 p-0 d-flex align-items-center text-center">
               <div className="block-newsletter w-100">
               <h3 className="section-title fw-normal mb-3 pb-2" style={{ color: '#cfa91a' }}>
-                  Zumar
+              {t("Free Delivery on All Orders!")}
                 </h3>
                 <p>
-                Zumar is a truly luxurious scent crafted for those who embrace elegance and sophistication, making it an essential addition to the collection of any perfume connoisseur.
+                {t("Enjoy seamless shopping with free delivery across the KW")}
                   {/* <b className="sub-title">Don't miss out.</b> */}
 
                 </p>
                 <a
                   className="btn-link btn-link_lg default-underline text-uppercase fw-medium"
-                  href={`/${locale}/shop/perfumes/oriental-fragrance/zumar`}
+                  href={`/${locale}/shop`}
                 >
-                  Shop Now
+                  {t("Shop Now")}
                 </a>
               </div>
             </div>

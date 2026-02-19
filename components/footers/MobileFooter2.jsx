@@ -52,12 +52,17 @@ export default function MobileFooter2() {
             className="form-control border-white"
             type="email"
             name="email"
-            placeholder="Your email address"
+            placeholder={locale === 'ar' ? "عنوان البريد الإلكتروني" : "Your email address"}
+            style={{
+              // Adds padding to the side where the button sits to prevent text overlap
+              paddingRight: locale === 'ar' ? '0.75rem' : '5rem', 
+              paddingLeft: locale === 'ar' ? '5rem' : '0.75rem' 
+            }}
           />
           <input
             className="btn-link fw-medium bg-white position-absolute top-0 end-0 h-100"
             type="submit"
-            defaultValue="JOIN"
+            value={locale === 'ar' ? "اشترك" : "JOIN"}
           />
         </form>
       </div>
@@ -129,7 +134,7 @@ export default function MobileFooter2() {
         <div className="logo d-flex justify-content-center">
           <a href="/">
           <Image
-                  src="/assets/images/about/ahmed-logo.png"
+                  src="/assets/images/about/AhmedLogo.png"
                   width={100}
                   height={100}
                   alt="Ahmed"
@@ -139,17 +144,17 @@ export default function MobileFooter2() {
         </div>
         {/* <!-- /.logo --> */}
         <p className="footer-address text-white text-center">
-          Ahmed Al Maghribi Perfume Manuf L.L.C, <br />
-          Manama <br />
-          Kuwait <br />
+          {t("Ahmed Al Maghribi Perfume Manuf")}<br />
+          {t("Manama")} <br />
+          {t("Kuwait")} <br />
         </p>
 
         <p className="m-0 text-white text-center">
           <strong className="fw-medium">info@ahmedalmaghribi.com</strong>
         </p>
         <p className="text-center">
-          <strong className="fw-medium text-white text-center">
-          +965 51789981 / 60409715
+          <strong dir="ltr" className="fw-medium text-white text-center">
+          {t("+965 51789981 / 60409715")}
           </strong>
         </p>
 

@@ -11,6 +11,7 @@ import Shop5 from "@/components/shoplist/Shop5";
 import RelatedSlider from "@/components/singleProduct/RelatedSlider";
 
 import QuickView from "@/components/modals/QuickView";
+import CollapsibleDescription from "@/components/shoplist/CollapsibleDescription";
 
 export const metadata = {
   title: "Gift Sets | Buy Best Perfumes Online | Ahmed Al Maghribi Perfumes",
@@ -21,6 +22,7 @@ export const metadata = {
 };
 
 async function getCategorySubCategory(categoryName) {
+  const slug = categoryName.toLowerCase();
   const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}api/products`, { 
     method: 'POST',
     headers: {
@@ -29,7 +31,10 @@ async function getCategorySubCategory(categoryName) {
     body: JSON.stringify({
       category: categoryName.split("-").join(" ").toUpperCase(),
     }),
-    cache: 'no-store',
+    next: {
+      tags: ["categories", `category-${slug}`],
+      revalidate: 604800 // 7 days
+    },
   });
   if (!response.ok) {
     throw new Error('Network response was not ok');
@@ -40,10 +45,10 @@ async function getCategorySubCategory(categoryName) {
 // export default function ShopPage5() {
   const ShopPage5 = async () => {
     const category = 'gift-sets';
-    console.log(category);
+    // console.log(category);
     try {
       const data = await getCategorySubCategory(category);
-      console.log(data);
+      // console.log(data);
       return data && (
       <>
         <QuickView />
@@ -51,6 +56,7 @@ async function getCategorySubCategory(categoryName) {
         <main>
           <Shop5 />
           <Shop10 products={ data.products }/>
+          <CollapsibleDescription description={data.description}  />
         </main>
 
         <section className=" d-none d-lg-block" style={{ height: "100%" }}>

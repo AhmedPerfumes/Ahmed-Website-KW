@@ -123,6 +123,7 @@ export default function Header14() {
             .join("-")}`;
     };
 
+    // "WARNING: If you change this logic, update the corresponding PHP/JS file."
     function removeSpecialCharactersAndAmp(str) {
         // Remove the specific word "&amp;"
         let cleanedStr = str.replace(/&amp;/g, "");
@@ -145,7 +146,7 @@ export default function Header14() {
                         ? `header header_sticky bg-white ${
                               scrollDirection == "up"
                                   ? "header_sticky-active"
-                                  : "position-absolute"
+                                  : "position-relative"
                           } `
                         : "header header_sticky position-sticky w-100 bg-white"
                 }
@@ -327,7 +328,7 @@ export default function Header14() {
                             <div className="logo">
                                 <a href="/">
                                 <img
-                                        src="/assets/images/about/ahmed-logo.png"
+                                        src="/assets/images/about/AhmedLogo.png"
                                         width="100px"
                                         alt="Ahmed"
                                     />

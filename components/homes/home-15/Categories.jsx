@@ -4,6 +4,7 @@ import {
     categories8,
     categories88,
     categoriesInfluencers,
+    categoriesTop,
 } from "@/data/categories";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
@@ -56,6 +57,10 @@ export default function Categories({ section }) {
     const renderSlides = (categories) =>
         categories.map((elm, i) => (
             <SwiperSlide key={i} className="swiper-slide">
+            <Link
+                href={`/${locale}${elm.link}`}
+                className="menu-link h6 fw-medium"
+            >
                 <video
                     loading="lazy"
                     className="w-100 mb-3"
@@ -71,27 +76,28 @@ export default function Categories({ section }) {
                 >
                     <source type="video/mp4" src={elm.videoSrc} />
                 </video>
-                <div className="text-center">
-                    <Link
-                        href={`${locale}${elm.link}`}
-                        className="menu-link h6 fw-medium"
-                    >
-                        {t(elm.altText)}
-                        <br />
-                        <span className="fs-14 text-secondary fst-italic">
-                            {t(elm.subText)}
-                        </span>
-                    </Link>
-                </div>
-                <div className="d-flex justify-content-center">
-                    <Link
-                        href={`/${locale}${elm.btn}`}
-                        className="btn-videos btn-link_lg text-uppercase fw-medium "
-                    >
-                        {t("Discover Now")}
-                    </Link>
-                </div>
-            </SwiperSlide>
+            </Link>
+            <div className="text-center">
+                <Link
+                    href={`${locale}${elm.link}`}
+                    className="menu-link h6 fw-medium"
+                >
+                    {t(elm.altText)}
+                    <br />
+                    <span className="fs-14 text-secondary fst-italic">
+                        {t(elm.subText)}
+                    </span>
+                </Link>
+            </div>
+            <div className="d-flex justify-content-center">
+                <Link
+                    href={`/${locale}${elm.btn}`}
+                    className="btn-videos btn-link_lg text-uppercase fw-medium "
+                >
+                    {t("Shop Now")}
+                </Link>
+            </div>
+        </SwiperSlide>
         ));
 
     if (section === "section3") {
@@ -122,7 +128,49 @@ export default function Categories({ section }) {
                 </Swiper>
             </>
         );
-    } else {
+    } 
+    else if (section === "sectionTop") {
+        categoryRend = (
+            <>
+                <h2 className="section-head section-title text-uppercase fs-25 fw-medium text-center mb-2">
+                    {t("Cherished by All")}
+                </h2>
+                <p className="fs-15 mb-4 pb-xl-2 mb-xl-4 text-secondary text-center section-paragraph">
+                    {t(
+                        "Long-lasting fragrance in every drop"
+                    )}
+                </p>
+                <Swiper className="swiper-container" {...swiperOptions}>
+                    {renderSlides(categoriesTop)}
+                    <div className="swiper-pagination"></div>
+                    <div className="swiper-button-next"></div>
+                    <div className="swiper-button-prev"></div>
+                </Swiper>
+            </>
+        );
+    }
+    else if (section === "fathersDay") {
+        categoryRend = (
+            <>
+                <h2 className="section-title text-uppercase fs-2 fw-medium text-center mb-2">
+                    {t("Father’s Day Fragrances")}
+                </h2>
+                <p className="fs-15 mb-4 pb-xl-2 mb-xl-4 text-secondary text-center section-paragraph">
+                    {t(
+                        "A Timeless Perfume for Dad"
+                    )}
+                </p>
+                <Swiper className="swiper-container" {...swiperOptions}>
+                    {renderSlides(categoriesTop)}
+                    <div className="swiper-pagination"></div>
+                    <div className="swiper-button-next"></div>
+                    <div className="swiper-button-prev"></div>
+                </Swiper>
+            </>
+        );
+    }
+
+    else {
         categoryRend = (
             <>
                 <h2 className="section-title text-uppercase fs-25 fw-medium text-center mb-2">

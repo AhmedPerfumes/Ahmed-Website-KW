@@ -70,6 +70,7 @@ export default function MobileHeader() {
       .join("-")}`;
   };
 
+  // "WARNING: If you change this logic, update the corresponding PHP/JS file."
   function removeSpecialCharactersAndAmp(str) {
     // Remove the specific word "&amp;"
     let cleanedStr = str.replace(/&amp;/g, "");
@@ -86,7 +87,7 @@ export default function MobileHeader() {
   return (
     <div
       className={`header-mobile header_sticky ${
-        scrollDirection == "up" ? "header_sticky-active" : "position-absolute"
+        scrollDirection == "up" ? "header_sticky-active" : "position-relative"
       } `}
     >
       <div className="container d-flex align-items-center h-100">
@@ -106,7 +107,7 @@ export default function MobileHeader() {
         <div className="logo">
           <a href="/">
           <Image
-              src="/assets/images/about/ahmed-logo.png"
+              src="/assets/images/about/AhmedLogo.png"
               width={70}
               height={70}
               alt="Ahmed"

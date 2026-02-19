@@ -32,6 +32,10 @@ export default function OrderCompleted() {
   }
 
   const subTotalPrice = (elm) => {
+    if (elm.is_gift) {
+      console.log('FREE');
+      return <td>0.000{currency.symbol} (Free Gift)</td>;
+    }
     const currentUTC = new Date(); // Current UTC time
     const currentGST = new Date(currentUTC.getTime() + (4 * 60 * 60 * 1000)); // Add 4 hours for GST
     const current_date_time = currentGST.toISOString().slice(0, 19).replace("T", " ");
@@ -53,7 +57,7 @@ export default function OrderCompleted() {
         return <td>{(elm.price * elm.quantity).toFixed(currency.decimals)}{ currency.symbol }</td>;
       }
     } else if(elm?.sale_price) {
-        return <td>{((elm.price - (elm.price / 100 * elm.sale_price)) * elm.qty).toFixed(currency.decimals)}{ currency.symbol }</td>;
+      return <td>{((elm.sale_price) * elm.qty).toFixed(2)}{ currency.symbol }</td>;
     } else {
         return <td>{(elm.price * elm.qty).toFixed(currency.decimals)}{ currency.symbol }</td>;
     }

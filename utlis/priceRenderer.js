@@ -1,0 +1,54 @@
+// utils/priceRenderer.js
+import React from "react";
+
+export const renderPrice = (product, currency) => {
+  if (!product) return null;
+
+  const now = new Date(new Date().getTime() + 4 * 60 * 60 * 1000); // GST offset
+  const start = product?.discount?.start_date ? new Date(product.discount.start_date) : null;
+  const end = product?.discount?.end_date ? new Date(product.discount.end_date) : null;
+
+  // ✅ If discount exists and is currently active
+  if (product.discount && start && end && now >= start && now <= end) {
+    // 👇 Default discount_type to "percent" if missing (for Kuwait)
+    const discountType = product.discount.discount_type || "percent";
+    const value = parseFloat(product.discount.value);
+    const price = parseFloat(product.price);
+
+    if (discountType === "percent") {
+      const discounted = (price - (price * value) / 100).toFixed(2);
+      return (
+        <>
+          <span className="money price price-old">
+            {currency.symbol}{price}
+          </span>
+          <span className="money price price-sale">
+            {currency.symbol}{discounted}
+          </span>
+        </>
+      );
+    } else if (discountType === "amount") {
+      // Handle flat discount or final_price fallback
+      const discounted = product.discount.final_price
+        ? parseFloat(product.discount.final_price).toFixed(2)
+        : (price - value).toFixed(2);
+      return (
+        <>
+          <span className="money price price-old">
+            {currency.symbol}{price}
+          </span>
+          <span className="money price price-sale">
+            {currency.symbol}{discounted}
+          </span>
+        </>
+      );
+    }
+  }
+
+  // Default: show base price
+  return (
+    <span className="money price">
+      {currency.symbol}{product.price}
+    </span>
+  );
+};

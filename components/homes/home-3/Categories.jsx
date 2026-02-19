@@ -86,6 +86,7 @@ export default function Categories({ params, subCategories }) {
     },
   };
 
+  // "WARNING: If you change this logic, update the corresponding PHP/JS file."
   function removeSpecialCharactersAndAmp(str) {
     // Remove the specific word "&amp;"
     let cleanedStr = str.replace(/&amp;/g, '');
@@ -100,7 +101,9 @@ export default function Categories({ params, subCategories }) {
   }
 
   return (
+    
     <section className="category-carousel container">
+    {categoryName !== "collections" && (
       <div className="position-relative">
         <Swiper {...swiperOptions} className="swiper-center swiper-container js-swiper-slider sub-cat-video">
           {subCategories?.map((elm, i) => (
@@ -143,6 +146,7 @@ export default function Categories({ params, subCategories }) {
           </video>
         </div>
       </div>
+    )}
     </section>
   );
 }

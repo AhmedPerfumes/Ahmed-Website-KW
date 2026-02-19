@@ -16,17 +16,53 @@ export default function Cart() {
   // const [couponError, setCouponError] = useState(null);
   // const [couponSuccess, setCouponSuccess] = useState(null);
   const { cartProducts, setCartProducts, totalPrice, freeShippingFlag } = useContextElement();
-  const setQuantity = async (id, quantity, productQty) => {
-    if (quantity >= 1 && quantity <= productQty) {
+  // const setQuantity = async (id, quantity, productQty) => {
+  //   if (quantity >= 1 && quantity <= productQty) {
+  //     setError(null);
+  //     const item = cartProducts.filter((elm) => elm.product_id == id)[0];
+  //     const items = [...cartProducts];
+  //     const itemIndex = items.indexOf(item);
+  //     item.quantity = quantity;
+  //     items[itemIndex] = item;
+  //     setCartProducts(items);
+  //   } else {
+  //     setError("Quantity is more than available quantity");
+  //   }
+  // };
+
+  const setQuantity = async (id, quantity, productQty, maxOrderQty) => {
+    // Determine dynamic max allowed per product
+    const MAX_LIMIT =
+      maxOrderQty && maxOrderQty > 0
+        ? maxOrderQty
+        : productQty; // fallback to stock quantity
+
+    // Check stock limit
+    const withinStock = quantity >= 1 && quantity <= productQty;
+
+    // Check max purchase limit
+    const withinLimit = quantity <= MAX_LIMIT;
+
+    if (withinStock && withinLimit) {
       setError(null);
-      const item = cartProducts.filter((elm) => elm.product_id == id)[0];
+
       const items = [...cartProducts];
-      const itemIndex = items.indexOf(item);
-      item.quantity = quantity;
-      items[itemIndex] = item;
+      const itemIndex = items.findIndex((elm) => elm.product_id == id);
+
+      if (itemIndex !== -1) {
+        items[itemIndex] = {
+          ...items[itemIndex],
+          quantity,
+        };
+      }
+
       setCartProducts(items);
     } else {
-      setError("Quantity is more than available quantity");
+      setError(
+        !withinStock
+          ? "Quantity is more than available quantity"
+          : `Maximum allowed quantity is ${MAX_LIMIT}`
+      );
     }
   };
   const removeItem = async(id) => {
@@ -105,7 +141,7 @@ export default function Cart() {
         return <span className="shopping-cart__subtotal">{(elm.price * elm.quantity).toFixed(currency.decimals)}{ currency.symbol }</span>;
       }
     } else if(elm?.sale_price) {
-      return <span className="shopping-cart__subtotal">{((elm.price - (elm.price / 100 * elm.sale_price)) * elm.quantity).toFixed(currency.decimals)}{ currency.symbol }</span>;
+      return <span className="shopping-cart__subtotal">{((elm.sale_price) * elm.quantity)}{ currency.symbol }</span>;
     } else {
       return <span className="shopping-cart__subtotal">{(elm.price * elm.quantity).toFixed(currency.decimals)}{ currency.symbol }</span>;
     }
@@ -119,7 +155,7 @@ export default function Cart() {
         return <span className="money price">{elm?.price}{ currency.symbol }</span>;
       }
     } else if(elm?.sale_price) {
-      return <span className="shopping-cart__product-price">{(elm.price - (elm.price / 100 * elm.sale_price)).toFixed(currency.decimals)}{ currency.symbol }</span>;
+      return <span className="shopping-cart__product-price">{(elm.sale_price)}{ currency.symbol }</span>;
     } else {
       return <span className="shopping-cart__product-price">{elm.price}{ currency.symbol }</span>;
     }
@@ -171,32 +207,33 @@ export default function Cart() {
                       
                     </td>
                     <td>
-                      <div className="qty-control position-relative">
+                      {!elm.is_gift ? <div className="qty-control position-relative">
                         <input
                           type="number"
                           name="quantity"
                           value={elm.quantity}
                           min={1}
                           onChange={(e) =>
-                            setQuantity(elm.product_id, e.target.value / 1, elm.product_qty)
+                            setQuantity(elm.product_id, e.target.value / 1, elm.product_qty, elm?.maximum_order_quantity)
                           }
                           className="qty-control__number text-center"
                           readOnly
                         />
                         <div
-                          onClick={() => setQuantity(elm.product_id, elm.quantity - 1, elm.product_qty)}
+                          onClick={() => setQuantity(elm.product_id, elm.quantity - 1, elm.product_qty, elm?.maximum_order_quantity)}
                           className="qty-control__reduce"
                         >
                           -
                         </div>
                         <div
-                          onClick={() => setQuantity(elm.product_id, elm.quantity + 1, elm.product_qty)}
+                          onClick={() => setQuantity(elm.product_id, elm.quantity + 1, elm.product_qty, elm?.maximum_order_quantity)}
                           className="qty-control__increase"
                         >
                           +
                         </div>
-                      </div>
+                      </div> : 1}
                     </td>
+                    
                     <td>
                       
                         { subTotalPrice(elm) }
