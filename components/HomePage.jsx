@@ -19,6 +19,7 @@ import Lookbook from "@/components/homes/home-9/Lookbook";
 import Image from "next/image";
 import Link from "next/link";
 import "swiper/css/pagination";
+import ProductShowcase from "./singleProduct/ProductShowcase/ProductShowcase";
 import { Autoplay, Pagination, Navigation } from "swiper/modules";
 import ProductSlider from "./ProductSlider";
 
@@ -156,10 +157,10 @@ const ScrollSnapHorizontalBootstrap = () => {
                 <Hero2 />
             </div>
 
-            <section className="scroll-section d-flex flex-direction-column section-1">
+            <ProductShowcase />
+
+            {/* <section className="scroll-section d-flex flex-direction-column section-1">
                 <div className="panel section-slider w-100 vh-100">
-                    {/* Background Overlay */}
-                    {/* <div className="background-overlay"></div> */}
                     <div className="section-content">
                         <div className="text-center text-white d-flex justify-content-center">
                             <span className="t-subtitle">
@@ -197,7 +198,7 @@ const ScrollSnapHorizontalBootstrap = () => {
                         {t("Scroll to discover")}
                     </span>
                 </div>
-            </section>
+            </section> */}
 
             <section
                 id="second-chapter-slider"
@@ -217,7 +218,7 @@ const ScrollSnapHorizontalBootstrap = () => {
                 <ProductSlider prodSlide="bestSellers" />
             </section>
 
-            <section className="scroll-section d-flex flex-direction-column section-2">
+            {/* <section className="scroll-section d-flex flex-direction-column section-2">
                 <div className="panel sub-section w-100 vh-100">
                     <div className="section-content">
                         <div className="text-center text-white d-flex justify-content-center">
@@ -256,7 +257,7 @@ const ScrollSnapHorizontalBootstrap = () => {
                         {t("Scroll to discover")}
                     </span>
                 </div>
-            </section>
+            </section> */}
 
             <section className="d-flex section-3">
                 <div className="">
@@ -519,12 +520,26 @@ const ScrollSnapHorizontalBootstrap = () => {
                     </div>
                 </div>
 
-                <div className="panel2 mt-5">
+                {/* <div className="panel2 mt-5">
                     <div className="inner2">
                         <VideoPanel
                             src="/assets/videos/zumar-video.mp4"
                             section="hundred"
                         />
+                    </div>
+                </div> */}
+
+                <div className="panel2 mt-5">
+                    <div className="inner2">
+                        <div className="youtube-wrapper">
+                        <iframe
+                            src="https://www.youtube.com/embed/gf0kYWgy-58?autoplay=1&mute=1&controls=0&disablekb=1&fs=0&loop=1&playlist=gf0kYWgy-58&modestbranding=1&rel=0"
+                            title="K - Series"
+                            frameBorder="0"
+                            allow="autoplay; fullscreen; picture-in-picture"
+                            allowFullScreen
+                            />
+                        </div>
                     </div>
                 </div>
 
