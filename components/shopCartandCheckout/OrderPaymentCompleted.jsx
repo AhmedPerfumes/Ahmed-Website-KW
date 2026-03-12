@@ -39,13 +39,13 @@ export default function OrderPaymentCompleted({ orderDetails }) {
         console.log('else if');
         return <td>{((elm.price - (elm.price / 100 * elm.coupon.value)) * elm.quantity).toFixed(currency.decimals)}{ currency.symbol }</td>;
     } else if(elm?.sale_price) {
-        return <td>{(((elm.price * 1.05) - (elm.sale_price)) * elm.qty).toFixed(currency.decimals)}{ currency.symbol }</td>;
+        return <td>{(((elm.price * 1) - (elm.sale_price)) * elm.qty).toFixed(currency.decimals)}{ currency.symbol }</td>;
     } else {
         console.log('else');
         if(elm?.product_category && elm.product_category == 'Collections') {
           return <td>{ elm.gross_amount }{ currency.symbol }</td>;
         }
-        return <td>{((elm.price * 1.05) * elm.qty).toFixed(2)}{ currency.symbol }</td>;
+        return <td>{((elm.price * 1) * elm.qty).toFixed(2)}{ currency.symbol }</td>;
     }
   };
 
