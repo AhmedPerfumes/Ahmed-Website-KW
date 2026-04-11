@@ -82,7 +82,7 @@ export default async function LocaleLayout({ children, params: { locale } }) {
             })(window,document,'script','dataLayer','${GTM_ID}');
           `}
         </Script>
-            <noscript>
+        <noscript>
           <iframe
             src={`https://www.googletagmanager.com/ns.html?id=${GTM_ID}`}
             height="0"
@@ -90,31 +90,31 @@ export default async function LocaleLayout({ children, params: { locale } }) {
             style={{ display: "none", visibility: "hidden" }}
           />
         </noscript>
-                <NextIntlClientProvider messages={messages}>
-                    <Svgs />
-                    <Context>
-                        <UserProvider>
-                            <FacebookPixelEvents />
-                            <MenuProvider>
-                                <MobileHeader />
-                                {children}
-                                <MobileFooter1 />
-                                {/* Modals and Asides */}
-                                <LoginFormPopup />
-                                <SizeGuide />
-                                <Delivery />
-                                <CartDrawer />
-                                <SiteMap />
-                                <CustomerLogin />
-                                <ProductDescription />
-                                <ProductAdditionalInformation />
-                                <ProductReviews />
-                            </MenuProvider>
-                        </UserProvider>
-                    </Context>
-                    <div className="page-overlay" id="pageOverlay"></div>
-                    <ScrollTop />
-                </NextIntlClientProvider>
+        <NextIntlClientProvider messages={messages}>
+            <Svgs />
+            <MenuProvider>
+                <Context>
+                    <UserProvider>
+                        <FacebookPixelEvents />
+                            <MobileHeader />
+                            {children}
+                            <MobileFooter1 />
+                            {/* Modals and Asides */}
+                            <LoginFormPopup />
+                            <SizeGuide />
+                            <Delivery />
+                            <CartDrawer />
+                            <SiteMap />
+                            <CustomerLogin />
+                            <ProductDescription />
+                            <ProductAdditionalInformation />
+                            <ProductReviews />
+                    </UserProvider>
+                </Context>
+            </MenuProvider>
+            <div className="page-overlay" id="pageOverlay"></div>
+            <ScrollTop />
+        </NextIntlClientProvider>
             </body>
         </html>
     );
