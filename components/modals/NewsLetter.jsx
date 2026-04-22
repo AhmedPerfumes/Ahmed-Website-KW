@@ -74,13 +74,13 @@ export default function NewsLetter() {
          <div className="row p-0 m-0">
             <div className="col-md-8 p-0">
               <div className="newsletter-popup__bg h-100 w-100">
-              <a href={`/${locale}/shop/perfumes/oriental-fragrance/kawkab`}>
+              <a href={`/${locale}/shop/perfumes/occidental-fragrance/dulook`}>
                 <Image
                   width={550}
                   height={650}
                   style={{ height: "fit-content" }}
                   loading="lazy"
-                  src="/assets/images/campaigns/FreeDelivery.jpg"
+                  src="/assets/images/popop.jpeg"
                   className="h-100 w-100 object-fit-cover d-block"
                   alt="image"                
                   />
@@ -91,16 +91,16 @@ export default function NewsLetter() {
             <div className="col-md-4 p-0 d-flex align-items-center text-center">
               <div className="block-newsletter w-100">
               <h3 className="section-title fw-normal mb-3 pb-2" style={{ color: '#cfa91a' }}>
-              {t("Free Delivery on All Orders!")}
+              {t("Dulook")}
                 </h3>
                 <p>
-                {t("Enjoy seamless shopping with free delivery across the KW")}
+                {t("The fragrance of the past and the elegance of the present.  ")}
                   {/* <b className="sub-title">Don't miss out.</b> */}
 
                 </p>
                 <a
                   className="btn-link btn-link_lg default-underline text-uppercase fw-medium"
-                  href={`/${locale}/shop`}
+                  href={`/${locale}/shop/perfumes/occidental-fragrance/dulook`}
                 >
                   {t("Shop Now")}
                 </a>
