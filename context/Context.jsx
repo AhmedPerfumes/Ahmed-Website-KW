@@ -2,6 +2,7 @@
 import { allProducts } from "@/data/products";
 import React, { useEffect } from "react";
 import { useContext, useState,useReducer } from "react";
+import { useMenu } from "./MenuContext";
 const dataContext = React.createContext();
 export const useContextElement = () => {
   return useContext(dataContext);
@@ -86,6 +87,7 @@ export default function Context({ children }) {
   const [orderDetails, setOrderDetails] = useState({});
   const [couponDataContext, setCouponDataContext] = useState(null);
   const[promotionsContext, setPromotionsContext] = useState([]);
+   const { shippingServiceCharges } = useMenu() ;
 
   // useEffect(() => {
   //   const currentUTC = new Date(); // Current UTC time
@@ -173,6 +175,8 @@ export default function Context({ children }) {
     
     // Oman static free shipping threshold (20) based on your original commented code
     // setFreeShippingFlag(Number(subtotal.toFixed(3)) >= 20);
+    const freeShippingThreshold = shippingServiceCharges?.[2]?.price ?? 6;
+    setFreeShippingFlag(Number(subtotal.toFixed(3)) >= freeShippingThreshold);
   }, [state.products, couponDataContext, promotionsContext]);
   // -----------------------------------------------
 

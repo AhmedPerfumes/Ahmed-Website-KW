@@ -96,7 +96,7 @@ export default function OrderCompleted() {
           <label>Total</label>
 
           <span>{parseFloat(orderDetails.total).toFixed(currency.decimals)}{ currency.symbol }
-            {/* (includes { orderDetails.shipping_amount > 0 ? (
+            (includes { orderDetails.shipping_amount > 0 ? (
                 (
                   (parseFloat(shippingServiceCharges[0].price) - parseFloat(shippingServiceCharges[0].price) / (1 + parseFloat(vatTax.percentage / 100))) +
                   (parseFloat(orderDetails.sub_total) - parseFloat(orderDetails.sub_total) / (1 + parseFloat(vatTax.percentage / 100))) +
@@ -106,7 +106,7 @@ export default function OrderCompleted() {
                   0 +
                   (parseFloat(orderDetails.sub_total) - parseFloat(orderDetails.sub_total) / (1 + parseFloat(vatTax.percentage / 100))) +
                   (parseFloat(shippingServiceCharges[1].price) - parseFloat(shippingServiceCharges[1].price) / (1 + parseFloat(vatTax.percentage / 100)))
-                ).toFixed(currency.decimals)) }{ currency.symbol } VAT) */}
+                ).toFixed(currency.decimals)) }{ currency.symbol } VAT)
           </span>
         </div>
         <div className="order-info__item">
@@ -143,8 +143,8 @@ export default function OrderCompleted() {
               </tr>
               <tr>
                 <th>SHIPPING</th>
-                {/* <td>{(orderDetails.sub_total).toFixed(currency.decimals) >= 20 ? 'You Got Free Shipping' : `Shipping Cost: ${ shippingServiceCharges[0].price }${ currency.symbol }`}</td> */}
-                <td>{`Shipping Cost: ${ shippingServiceCharges[0].price }${ currency.symbol }`}</td>
+                <td>{(orderDetails.sub_total).toFixed(currency.decimals) >= 6 ? 'You Got Free Shipping' : `Shipping Cost: ${ shippingServiceCharges[0].price }${ currency.symbol }`}</td>
+                {/* <td>{`Shipping Cost: ${ shippingServiceCharges[0].price }${ currency.symbol }`}</td> */}
               </tr>
               {/* <tr>
                 <th>SERVICE FEE</th>
@@ -153,7 +153,7 @@ export default function OrderCompleted() {
               <tr>
                 <th>TOTAL</th>
                 <td>{parseFloat(orderDetails.total).toFixed(currency.decimals)}{ currency.symbol }
-                  {/* (includes { orderDetails.shipping_amount > 0 ? (
+                  (includes { orderDetails.shipping_amount > 0 ? (
                     (
                       (parseFloat(shippingServiceCharges[0].price) - parseFloat(shippingServiceCharges[0].price) / (1 + parseFloat(vatTax.percentage / 100))) +
                       (parseFloat(orderDetails.sub_total) - parseFloat(orderDetails.sub_total) / (1 + parseFloat(vatTax.percentage / 100))) +
@@ -163,7 +163,7 @@ export default function OrderCompleted() {
                       0 +
                       (parseFloat(orderDetails.sub_total) - parseFloat(orderDetails.sub_total) / (1 + parseFloat(vatTax.percentage / 100))) +
                       (parseFloat(shippingServiceCharges[1].price) - parseFloat(shippingServiceCharges[1].price) / (1 + parseFloat(vatTax.percentage / 100)))
-                    ).toFixed(currency.decimals)) }{ currency.symbol } VAT) */}
+                    ).toFixed(currency.decimals)) }{ currency.symbol } VAT)
                 </td>
               </tr>
             </tbody>

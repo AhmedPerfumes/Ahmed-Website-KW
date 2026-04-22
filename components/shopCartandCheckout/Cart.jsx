@@ -369,7 +369,7 @@ export default function Cart() {
                       {!freeShippingFlag ?
                         (parseFloat(shippingServiceCharges[0].price) + totalPrice + parseFloat(shippingServiceCharges[1].price)).toFixed(currency.decimals) :
                         (0 + totalPrice + parseFloat(shippingServiceCharges[1].price)).toFixed(currency.decimals)}{ currency.symbol }
-                        {/* (includes { !freeShippingFlag ? (
+                        (includes { !freeShippingFlag ? (
                           (
                             (parseFloat(shippingServiceCharges[0].price) - parseFloat(shippingServiceCharges[0].price) / (1 + parseFloat(vatTax.percentage / 100))) +
                             (parseFloat(totalPrice) - parseFloat(totalPrice) / (1 + parseFloat(vatTax.percentage / 100))) +
@@ -379,7 +379,7 @@ export default function Cart() {
                             0 +
                             (parseFloat(totalPrice) - parseFloat(totalPrice) / (1 + parseFloat(vatTax.percentage / 100))) +
                             (parseFloat(shippingServiceCharges[1].price) - parseFloat(shippingServiceCharges[1].price) / (1 + parseFloat(vatTax.percentage / 100)))
-                          ).toFixed(currency.decimals)) }{ currency.symbol } VAT) */}
+                          ).toFixed(currency.decimals)) }{ currency.symbol } VAT)
                     </td>
                   </tr>
                 </tbody>
