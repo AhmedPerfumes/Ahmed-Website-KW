@@ -958,29 +958,29 @@ export default function Checkout() {
                     ))}
                   </tbody>
                 </table>
-                 {/* {
-            (() => {
-              // Only count non-excluded products
-              const regularProducts = cartProducts.filter((item) => item.category_name && !['gift sets', 'collections'].includes(item.category_name.toLowerCase()));
-              const regularQuantity = regularProducts.reduce((total, item) => total + item.quantity, 0);
-              const hasRegularProducts = regularProducts.length > 0;
-              const hasBogoActive = cartProducts.some((item) => item.bogo_free_qty && item.bogo_free_qty > 0);
-              
-              return (hasBogoActive || regularQuantity > 3) && hasRegularProducts ? (
-                <>
-                  <div style={{ backgroundColor: "#d4edda", border: "1px solid #28a745", borderRadius: "4px", padding: "12px 16px", marginTop: "12px", marginBottom: "12px", color: "#155724", fontSize: "14px", fontWeight: "500", textAlign: "center" }}>
-                    ✓ <strong>Your Buy 3 Get 1 Offer has been applied!</strong>  
-                  </div>
+                 {
+                    (() => {
+                      // Only count non-excluded products
+                      const regularProducts = cartProducts.filter((item) => item.category_name && !['gift sets', 'collections'].includes(item.category_name.toLowerCase()));
+                      const regularQuantity = regularProducts.reduce((total, item) => total + item.quantity, 0);
+                      const hasRegularProducts = regularProducts.length > 0;
+                      const hasBogoActive = cartProducts.some((item) => item.bogo_free_qty && item.bogo_free_qty > 0);
+                      
+                      return (hasBogoActive || regularQuantity > 3) && hasRegularProducts ? (
+                        <>
+                          <div style={{ backgroundColor: "#d4edda", border: "1px solid #28a745", borderRadius: "4px", padding: "12px 16px", marginTop: "12px", marginBottom: "12px", color: "#155724", fontSize: "14px", fontWeight: "500", textAlign: "center" }}>
+                            ✓ <strong>Your Buy 3 Get 1 Offer has been applied!</strong>  
+                          </div>
 
-                  <div style={{ backgroundColor: "#e3f2fd", color: "#1565c0", padding: "14px 20px", marginBottom: "1rem", textAlign: "center", fontSize: "15px", fontWeight: "500", borderRadius: "2px", border: "1px solid #bbdefb" }} > Your cart qualifies for a Buy 3 Get 1 Free promotion, which replaces other discounts. You may remove items to reapply percentage-based discounts. </div>
-                </>
-              ) : regularQuantity === 3 && hasRegularProducts ? (
-                <div style={{ backgroundColor: "#fff3cd", border: "1px solid #ffc107", borderRadius: "4px", padding: "12px 16px", marginBottom: "12px", color: "#856404", fontSize: "14px", fontWeight: "500", textAlign: "center" }}>
-                  🎁 <strong>Great! You're one step away!</strong> Add one more product to your cart to get 1 product FREE with our Buy 3 Get 1 Free offer!
-                </div>
-              ) : null;
-            })()
-          } */}
+                          <div style={{ backgroundColor: "#e3f2fd", color: "#1565c0", padding: "14px 20px", marginBottom: "1rem", textAlign: "center", fontSize: "15px", fontWeight: "500", borderRadius: "2px", border: "1px solid #bbdefb" }} > Your cart qualifies for a Buy 3 Get 1 Free promotion, which replaces other discounts. You may remove items to reapply percentage-based discounts. </div>
+                        </>
+                      ) : regularQuantity === 3 && hasRegularProducts ? (
+                        <div style={{ backgroundColor: "#fff3cd", border: "1px solid #ffc107", borderRadius: "4px", padding: "12px 16px", marginBottom: "12px", color: "#856404", fontSize: "14px", fontWeight: "500", textAlign: "center" }}>
+                          🎁 <strong>Great! You're one step away!</strong> Add one more product to your cart to get 1 product FREE with our Buy 3 Get 1 Free offer!
+                        </div>
+                      ) : null;
+                    })()
+                  }
                 <table className="checkout-totals">
                   <tbody>
                     <tr>
