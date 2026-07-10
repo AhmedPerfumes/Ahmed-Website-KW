@@ -214,9 +214,42 @@ export default function Context({ children }) {
       payload: product
     });
 
+    // ---- GA4 add_to_cart (TikTok listener maps to ttq AddToCart) ----
+    // ---- Meta Pixel AddToCart (explicit — autoConfig is disabled) ----
+    try {
+      if (!product.is_gift) {
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push({
+          event: "add_to_cart",
+          ecommerce: {
+            currency: "KWD",
+            value: parseFloat((product.price || 0) * (product.quantity || 1)),
+            items: [{
+              item_id: product.product_id?.toString(),
+              item_name: product.product_name,
+              price: parseFloat(product.price || 0),
+              quantity: product.quantity || 1,
+              item_category: product.category_name || "",
+            }],
+          },
+        });
+
+        if (typeof window.fbq === "function") {
+          window.fbq("track", "AddToCart", {
+            content_ids: [product.product_id?.toString()],
+            content_name: product.product_name,
+            content_type: "product",
+            value: parseFloat((product.price || 0) * (product.quantity || 1)),
+            currency: "KWD",
+          });
+        }
+      }
+    } catch (e) { /* tracking errors must never break cart */ }
+
     document.getElementById("cartDrawerOverlay")?.classList.add("page-overlay_visible");
     document.getElementById("cartDrawer")?.classList.add("aside_visible");
   };
+
 
   // 3. SAFE REMOVE GIFT USING REDUCER
   const removeGiftFromCart = (productId = null, campaign = null) => {
