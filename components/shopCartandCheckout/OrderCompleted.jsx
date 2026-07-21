@@ -2,7 +2,7 @@
 
 import { useContextElement } from "@/context/Context";
 import { useMenu } from '@/context/MenuContext';
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import he from 'he';
 import Link from "next/link";
 import Pagination1 from "../common/Pagination1";
@@ -13,16 +13,51 @@ export default function OrderCompleted() {
   // console.log('...', freeShippingFlag);
   const [showDate, setShowDate] = useState(false);
   const [orderData, setorderData] = useState(null);
+  const hasFiredPurchase = useRef(false);
+
   useEffect(() => {
     setShowDate(true);
     localStorage.setItem('cartList', []);
     setCartProducts([]);
-    // if(localStorage.getItem('orderData').length > 0) {
-    //   setOrderDetails(JSON.parse(atob(localStorage.getItem('orderData'))));
-    //   // localStorage.setItem('orderData', '');
-    // }
-    // console.log('...', localStorage.getItem('orderData').length);
-  }, []);
+
+    // ✅ Fire purchase events exactly once
+    if (orderDetails && orderDetails.order_id && !hasFiredPurchase.current) {
+      hasFiredPurchase.current = true;
+
+      const gaItems = (orderDetails.products || []).map((item) => ({
+        item_id: item.product_id?.toString(),
+        item_name: he.decode(item.product_name || item.name || ""),
+        price: Number(item.price),
+        quantity: Number(item.qty),
+      }));
+      const gaValue = gaItems.reduce((sum, i) => sum + i.price * i.quantity, 0);
+
+      // ---- GA4 Purchase (TikTok listener in layout.jsx maps to ttq.track("Purchase")) ----
+      window.dataLayer = window.dataLayer || [];
+      window.dataLayer.push({
+        event: "purchase",
+        ecommerce: {
+          transaction_id: orderDetails.order_id,
+          affiliation: "Ahmed Al Maghribi Perfumes Kuwait",
+          value: gaValue,
+          currency: currency?.code || "KWD",
+          items: gaItems,
+        },
+      });
+
+      // ---- Meta Pixel Purchase ----
+      if (typeof window.fbq === "function") {
+        window.fbq("track", "Purchase", {
+          content_ids: (orderDetails.products || []).map((item) => item.product_id?.toString()),
+          content_type: "product",
+          contents: (orderDetails.products || []).map((item) => ({ id: item.product_id?.toString(), quantity: item.qty })),
+          value: gaValue,
+          currency: currency?.code || "KWD",
+          order_id: orderDetails.order_id,
+        });
+      }
+    }
+  }, [orderDetails]);
 
   if (isMenuLoading) {
     return <div><Pagination1 /></div>;
