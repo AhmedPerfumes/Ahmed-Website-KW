@@ -146,7 +146,7 @@ export default function Footer14() {
             </p>
             <p>
               <strong dir="ltr" className="fw-medium">
-              {t("+965 51789981 / 60409715")}
+              {t("+965 51789981 / 66073478")}
               </strong>
             </p>
 
