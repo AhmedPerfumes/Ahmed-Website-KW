@@ -81,8 +81,8 @@ export default function Style2({ category, subcategory, products: initialProduct
 
   function capitalizeEachWord(str) {
     return str.split(' ') // Split the sentence into words
-              .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()) // Capitalize first letter of each word
-              .join(' '); // Join the words back into a sentence
+               .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()) // Capitalize first letter of each word
+      .join(' '); // Join the words back into a sentence
   }
 
   // "WARNING: If you change this logic, update the corresponding PHP/JS file."
@@ -127,18 +127,24 @@ export default function Style2({ category, subcategory, products: initialProduct
     const currentUTC = new Date(); // Current UTC time
     const currentGST = new Date(currentUTC.getTime() + (4 * 60 * 60 * 1000)); // Add 4 hours for GST
     const current_date_time = currentGST.toISOString().slice(0, 19).replace("T", " ");
-    if(elm?.discount) {
-      if(new Date(current_date_time) >= new Date(elm.discount.start_date) && new Date(current_date_time) <= new Date(elm.discount.end_date)) {
-        return <><span className="money price price-old">{elm?.price}{ currency.symbol }</span> <span className="money price price-sale"> {(elm.price - (elm.price / 100 * elm.discount.value)).toFixed(currency.decimals)}{ currency.symbol }</span></>;
+    if (elm?.discount) {
+      if (new Date(current_date_time) >= new Date(elm.discount.start_date) && new Date(current_date_time) <= new Date(elm.discount.end_date)) {
+        if (elm.discount.discount_type == "percent") {
+          return <><span className="money price price-old">{elm?.price}{currency.symbol}</span> <span className="money price price-sale"> {(elm.price - (elm.price / 100 * elm.discount.value)).toFixed(currency.decimals)}{currency.symbol}</span></>;
+        } else if (elm.discount.discount_type == "amount") {
+          return <><span className="money price price-old">{elm?.price}{currency.symbol}</span> <span className="money price price-sale"> {(elm.price - elm.discount.value).toFixed(currency.decimals)}{currency.symbol}</span></>;
+        }
       } else {
-        return <span className="money price">{elm?.price}{ currency.symbol }</span>;
+        return <span className="money price">{elm?.price}{currency.symbol}</span>;
       }
-    } else if(elm?.sale_price) {
-      console.log("10001",elm.sale_price);
+    }
+    // else if(elm?.sale_price) {
+    //   console.log("10001",elm.sale_price);
       
-      return <><span className="money price price-old">{elm?.price}{ currency.symbol }</span> <span className="money price price-sale"> {((elm.sale_price))}{ currency.symbol }</span></>;
-    } else {
-      return <span className="money price">{elm?.price}{ currency.symbol }</span>;
+    //   return <><span className="money price price-old">{elm?.price}{ currency.symbol }</span> <span className="money price price-sale"> {((elm.sale_price))}{ currency.symbol }</span></>;
+    // } 
+    else {
+      return <span className="money price">{elm?.price}{currency.symbol}</span>;
     }
   };
 
@@ -176,26 +182,26 @@ export default function Style2({ category, subcategory, products: initialProduct
                       {elm?.images &&
                         // JSON.parse(elm.images).map((image, ind) => (
                             <>
-                              {JSON.parse(elm.images)[0] && <Image
-                                loading="lazy"
-                                src={`${process.env.NEXT_PUBLIC_API_URL}storage/${JSON.parse(elm.images)[0]}`}
-                                width="330"
-                                height="400"
-                                alt="img"
-                                className="pc__img"
-                              />
-                              }
+                          {JSON.parse(elm.images)[0] && <Image
+                            loading="lazy"
+                            src={`${process.env.NEXT_PUBLIC_API_URL}storage/${JSON.parse(elm.images)[0]}`}
+                            width="330"
+                            height="400"
+                            alt="img"
+                            className="pc__img"
+                          />
+                          }
 
-                              {JSON.parse(elm.images)[1] && <Image
-                                loading="lazy"
-                                src={`${process.env.NEXT_PUBLIC_API_URL}storage/${JSON.parse(elm.images)[1]}`}
-                                width="330"
-                                height="400"
-                                alt="img"
-                                className="pc__img pc__img-second"
-                              />
-                              }
-                            </>
+                             {JSON.parse(elm.images)[1] && <Image
+                            loading="lazy"
+                            src={`${process.env.NEXT_PUBLIC_API_URL}storage/${JSON.parse(elm.images)[1]}`}
+                            width="330"
+                            height="400"
+                            alt="img"
+                            className="pc__img pc__img-second"
+                          />
+                          }
+                        </>
                         // ))
                         }
                       </Link>
@@ -347,7 +353,7 @@ export default function Style2({ category, subcategory, products: initialProduct
                       .join("-")
                       .toLowerCase()}`}
                   >
-                    {elm?.product_name && t(he.decode(elm?.product_name))}
+                    {locale === 'ar' ? he.decode(elm?.product_name_ar || t(he.decode(elm?.product_name))) : he.decode(elm?.product_name || "")}
                   </Link>
                 </h6>
                 <div className="product-card__price d-flex">

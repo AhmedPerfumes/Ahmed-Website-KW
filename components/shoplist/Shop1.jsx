@@ -19,7 +19,7 @@ import {
 import he from 'he';
 import Slider from "rc-slider";
 
-import {useLocale} from 'next-intl';
+import {useLocale,useTranslations} from 'next-intl';
 import { useMenu } from '@/context/MenuContext';
 
 export default function Shop1({ search }) {
@@ -89,23 +89,23 @@ export default function Shop1({ search }) {
     fetchData(page);
   }, [page, limit]); // Fetch data on page change
 
-useEffect(() => {
-  const handleScroll = () => {
-    if (window.innerHeight + document.documentElement.scrollTop + offset < document.documentElement.offsetHeight || loading || !hasMore) return;
-    setPage((prevPage) => prevPage + 1); // Load next page
-  };
+ useEffect(() => {
+    const handleScroll = () => {
+      if (window.innerHeight + document.documentElement.scrollTop + offset < document.documentElement.offsetHeight || loading || !hasMore) return;
+      setPage((prevPage) => prevPage + 1); // Load next page
+    };
 
   window.addEventListener('scroll', handleScroll);
-  return () => window.removeEventListener('scroll', handleScroll);
-}, [loading]); // Clean up on component unmount
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [loading]); // Clean up on component unmount
 
 useEffect(() => {
-  const handleClickOutside = (event) => {
-    // Check if the click is outside the referenced element
-    if (ref.current && !ref.current.contains(event.target)) {
-      setIsDDActive(false);
-    }
-  };
+    const handleClickOutside = (event) => {
+      // Check if the click is outside the referenced element
+      if (ref.current && !ref.current.contains(event.target)) {
+        setIsDDActive(false);
+      }
+    };
 
   // Add event listener to document
   document.addEventListener("click", handleClickOutside);
@@ -466,8 +466,17 @@ useEffect(() => {
 
                 <div className="pc__info position-relative">
                   <p className="pc__category">{elm.category_name}</p>
-                  <h6 className="pc__title">
-                    <Link href={`/${locale}/shop/${removeSpecialCharactersAndAmp(elm.category_name).split(' ').join('-').toLowerCase()}/${isSubcategory(elm.category_name.split(' ').join('-').toLowerCase(), elm.subcategory)}/${removeSpecialCharactersAndAmp(elm.product_name).split(' ').join('-').toLowerCase()}`}>{elm?.product_name && he.decode(elm?.product_name)}</Link>
+                 <h6 className="pc__title">
+                    <Link
+                      href={`/${locale}/shop/${clean(
+                        elm.category_name
+                      )}/${isSubcat(
+                        elm.category_name,
+                        elm.subcategory
+                      )}/${clean(elm.product_name)}`}
+                    >
+                      {locale === 'ar' ? he.decode(elm?.product_name_ar || t(he.decode(elm?.product_name))) : he.decode(elm?.product_name || "")}
+                    </Link>
                   </h6>
                   <div className="product-card__price d-flex">
                     {/* {elm.price ? (
