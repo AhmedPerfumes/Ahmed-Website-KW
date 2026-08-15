@@ -284,6 +284,9 @@ $card-image-height: 121.212122%;
     padding-top: 0.625rem;
     padding-bottom: 0.375rem;
     font-size: 0.75rem;
+      bottom: 0.625rem !important;
+    opacity: 1 !important;
+    visibility: visible !important;
   }
 }
 
@@ -412,6 +415,7 @@ $card-image-height: 121.212122%;
     display: -webkit-box;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 2;
+    line-clamp: 2;
     overflow: hidden;
     line-height: 1.5;
   }

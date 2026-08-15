@@ -144,11 +144,10 @@ export default function Header14() {
                 id="header"
                 className={
                     pathname == "/"
-                        ? `header header_sticky bg-white ${
-                              scrollDirection == "up"
-                                  ? "header_sticky-active"
-                                  : "position-relative"
-                          } `
+                       ? `header header_sticky bg-white ${scrollDirection == "up"
+                            ? "header_sticky-active"
+                            : "position-relative"
+                        } `
                         : "header header_sticky position-sticky w-100 bg-white"
                 }
                 style={pathname == "/" ? {} : {}}
@@ -186,9 +185,8 @@ export default function Header14() {
 
                 <div
                     ref={containerRef}
-                    className={`header-tools__item hover-container ${
-                        isPopupOpen ? "js-content_visible" : ""
-                    }`}
+                      className={`header-tools__item hover-container ${isPopupOpen ? "js-content_visible" : ""
+                        }`}
                 >
                     <div className="search-popup js-hidden-content">
                         <form
@@ -233,7 +231,7 @@ export default function Header14() {
                                     <h6 className="sub-menu__title fs-base">
                                         {t("Quicklinks")}
                                     </h6>
-                                    <ul className="sub-menu__list list-unstyled">
+                                   <ul className="sub-menu__list list-unstyled p-0 m-0 w-100">
                                         <li className="sub-menu__item">
                                             <Link
                                                 href={`/${locale}/shop/perfumes/oriental-fragrance/zumar`}
