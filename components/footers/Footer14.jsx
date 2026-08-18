@@ -137,7 +137,6 @@ export default function Footer14() {
             {/* <!-- /.logo --> */}
             <p className="footer-address">
               {t("Ahmed Al Maghribi Perfume Manuf")} <br />
-              {t("Manama")} <br />
               {t("Kuwait")} <br />
             </p>
 
