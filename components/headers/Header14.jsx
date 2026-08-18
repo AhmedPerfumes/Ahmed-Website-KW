@@ -17,6 +17,7 @@ import { useMenu } from "../../context/MenuContext";
 import { useUser } from "../../context/UserContext";
 import { useLocale, useTranslations } from "next-intl";
 import { useRouter, usePathname } from "../../i18n/routing";
+import Image from "next/image";
 
 export default function Header14() {
     const [scrollDirection, setScrollDirection] = useState("down");
@@ -324,11 +325,13 @@ export default function Header14() {
                                 </div>
                             </div>
                             <div className="logo">
-                                 <Link href={`/${locale}`}>
-                                    <img
-                                        src="/assets/images/about/AhmedLogo.png"
-                                        width="100px"
-                                        alt="Ahmed"
+                                <Link href="/">
+                                    <Image
+                                        loading="eager"
+                                        src="/assets/images/logo/Desktop.svg"
+                                        width="100"
+                                        height="100"
+                                        alt="Ahmed Al Maghribi"
                                     />
                                 </Link>
                             </div>
