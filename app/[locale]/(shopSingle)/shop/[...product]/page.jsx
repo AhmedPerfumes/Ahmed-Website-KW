@@ -179,13 +179,13 @@ export async function generateMetadata({ params }) {
   }
 }
 const ProductDetailsPage16 = async({ params }) => {
-  const { locale } = params;
+   const { locale } = params;
   const [ categoryName, subCategoryName, product ] = params.product;
   // console.log(categoryName, subCategoryName, product);
   try {
     const data = await getproduct(categoryName, subCategoryName, product);
-    const activeDescription= locale==='ar'?data.description_ar:data.description
-     const title = locale === 'ar' ? "عن هذا المنتج" : "About this Product";
+    const activeDescription = locale === 'ar' ? (data.seo_content_ar || data.seo_content) : data.seo_content;
+        const title = locale === 'ar' ? "عن هذا المنتج" : "About this Product";
     // console.log(data);
     return (
       <>
