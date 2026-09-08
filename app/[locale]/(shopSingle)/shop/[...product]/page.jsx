@@ -185,6 +185,7 @@ const ProductDetailsPage16 = async({ params }) => {
   try {
     const data = await getproduct(categoryName, subCategoryName, product);
     const activeDescription= locale==='ar'?data.description_ar:data.description
+     const title = locale === 'ar' ? "عن هذا المنتج" : "About this Product";
     // console.log(data);
     return (
       <>
