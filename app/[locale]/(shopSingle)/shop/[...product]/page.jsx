@@ -179,6 +179,7 @@ export async function generateMetadata({ params }) {
   }
 }
 const ProductDetailsPage16 = async({ params }) => {
+  const { locale } = params;
   const [ categoryName, subCategoryName, product ] = params.product;
   // console.log(categoryName, subCategoryName, product);
   try {
