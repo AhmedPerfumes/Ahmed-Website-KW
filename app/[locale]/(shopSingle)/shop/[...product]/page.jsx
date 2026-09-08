@@ -151,6 +151,7 @@ const ProductSchema = ({ category, subcategory, product }) => {
 
 export async function generateMetadata({ params }) {
   const [categoryName, subCategoryName, product] = params.product;
+  
 
   try {
       const data = await getProductSEO(categoryName, subCategoryName, product);
@@ -182,6 +183,7 @@ const ProductDetailsPage16 = async({ params }) => {
   // console.log(categoryName, subCategoryName, product);
   try {
     const data = await getproduct(categoryName, subCategoryName, product);
+    const activeDescription= locale==='ar'?data.description_ar:data.description
     // console.log(data);
     return (
       <>
