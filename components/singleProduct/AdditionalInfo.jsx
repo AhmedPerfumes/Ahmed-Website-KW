@@ -103,14 +103,13 @@ export default function AdditionalInfo({ product, product_name, video, title }) 
         <div className="container py-4">
           {/* Top Notes */}
           {topNote && (
-            <div className="d-lg-flex align-items-lg-center mb-5">
-              <p className="d-none d-lg-block">&nbsp;</p>
+            <div className="d-flex flex-column flex-lg-row align-items-lg-center mb-5">
               {topNote.image && (
-                <p className="mb-0 flex-shrink-0" style={{ maxWidth: "380px" }}>
+                <div className="order-2 order-lg-1 mb-0 mt-3 mt-lg-0 flex-shrink-0" style={{ maxWidth: "380px" }}>
                   <img src={topNote.image} alt={topNote.title} className="img-fluid" />
-                </p>
+                </div>
               )}
-              <div className={`content-wrapper col-lg-7 px-lg-5 text-white ${isAr ? "text-end" : "text-start"}`}>
+              <div className={`content-wrapper order-1 order-lg-2 col-lg-7 px-lg-5 text-white ${isAr ? "text-end" : "text-start"}`}>
                 <h3 className="mb-3 text-white">
                   {topNote.title}
                 </h3>
@@ -128,8 +127,8 @@ export default function AdditionalInfo({ product, product_name, video, title }) 
 
           {/* Heart Notes */}
           {heartNote && (
-            <div className="d-lg-flex align-items-lg-center mb-5 flex-column-reverse flex-lg-row">
-              <div className={`content-wrapper col-lg-7 px-lg-5 order-2 order-lg-1 text-white ${isAr ? "text-end" : "text-start"}`}>
+            <div className="d-flex flex-column flex-lg-row align-items-lg-center mb-5">
+              <div className={`content-wrapper order-1 order-lg-1 col-lg-7 px-lg-5 text-white ${isAr ? "text-end" : "text-start"}`}>
                 <h3 className="mb-3 text-white">
                   {heartNote.title}
                 </h3>
@@ -143,23 +142,22 @@ export default function AdditionalInfo({ product, product_name, video, title }) 
                 )}
               </div>
               {heartNote.image && (
-                <p className="order-1 order-lg-2 mb-0 flex-shrink-0" style={{ maxWidth: "380px" }}>
+                <div className="order-2 order-lg-2 mb-0 mt-3 mt-lg-0 flex-shrink-0" style={{ maxWidth: "380px" }}>
                   <img className="img-fluid" src={heartNote.image} alt={heartNote.title} />
-                </p>
+                </div>
               )}
             </div>
           )}
 
           {/* Bottom Notes */}
           {baseNote && (
-            <div className="d-lg-flex align-items-lg-center mb-5">
-              <p className="d-none d-lg-block">&nbsp;</p>
+            <div className="d-flex flex-column flex-lg-row align-items-lg-center mb-5">
               {baseNote.image && (
-                <p className="mb-0 flex-shrink-0" style={{ maxWidth: "380px" }}>
+                <div className="order-2 order-lg-1 mb-0 mt-3 mt-lg-0 flex-shrink-0" style={{ maxWidth: "380px" }}>
                   <img src={baseNote.image} alt={baseNote.title} className="img-fluid" />
-                </p>
+                </div>
               )}
-              <div className={`content-wrapper col-lg-7 px-lg-5 text-white ${isAr ? "text-end" : "text-start"}`}>
+              <div className={`content-wrapper order-1 order-lg-2 col-lg-7 px-lg-5 text-white ${isAr ? "text-end" : "text-start"}`}>
                 <h3 className="mb-3 text-white">
                   {baseNote.title}
                 </h3>
