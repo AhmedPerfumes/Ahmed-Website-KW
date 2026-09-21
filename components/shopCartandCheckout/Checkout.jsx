@@ -108,11 +108,11 @@ export default function Checkout() {
   useEffect(() => {
     if (hasCleaned.current) return;
     // Check if any regular (non-gift, non-free) products are in BOGO
-    const hasBogoRegularItems = cartProducts.some((item) => 
-      !item.is_gift && 
+    const hasBogoRegularItems = cartProducts.some((item) =>
+      !item.is_gift &&
       promotionsContext.some((promo) => promo.buy_products.some((buyItem) => buyItem.product_id === item.product_id))
     );
-    
+
     if (!hasBogoRegularItems) {
       // Only remove coupon properties from products that have no BOGO and no discount
       const cleanedCart = cartProducts.map((item) => {
@@ -216,7 +216,7 @@ export default function Checkout() {
     });
     return mapped;
   };
- 
+
   async function onOrder(event) {
     event.preventDefault();
     setIsLoading(true);
@@ -266,7 +266,7 @@ export default function Checkout() {
     const servicePriceVat = servicePrice / 100 * vatTax.percentage;
 
     let userJson = null;
-    if(isLoggedIn) {
+    if (isLoggedIn) {
       const user = atob(localStorage.getItem('user'));
       userJson = JSON.parse(user);
     }
@@ -281,7 +281,7 @@ export default function Checkout() {
 
     const additionalFields = {
       ...cleanFormData,
-      products : mapProductsFromFormData(cartProducts),
+      products: mapProductsFromFormData(cartProducts),
       payment_method: selectedOption,
       shippingPrice,
       shippingPriceVat,
@@ -295,7 +295,7 @@ export default function Checkout() {
       couponCode
     }
     // console.log('additionalFields', additionalFields);return;
- 
+
     try {
       // const formDataa = new FormData(additionalFields);
       const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}api/storeOrder`, {
@@ -305,15 +305,15 @@ export default function Checkout() {
           'content-type': 'application/json'
         }
       })
- 
+
       if (!response.ok) {
         throw new Error('Failed to submit the data. Please try again.');
       }
- 
+
       // Handle response if necessary
       const data = await response.json();
       // console.log(data);
-      if(data.message && data.message.split(' ')[0] == 'Order') {
+      if (data.message && data.message.split(' ')[0] == 'Order') {
         setSuccess(data.message);
         setError(null);
         setOrderDetails(data);
@@ -339,7 +339,7 @@ export default function Checkout() {
           shippingAdd: false,
         });
         setTimeout(() => router.push(`/${locale}/shop-order-complete`), 1000);
-      } else if(data.message && data.message.split(' ')[0] == 'Redirecting') {
+      } else if (data.message && data.message.split(' ')[0] == 'Redirecting') {
         setSuccess(data.message);
         setError(null);
         // localStorage.setItem('orderData', btoa(JSON.stringify(data)));
@@ -359,31 +359,31 @@ export default function Checkout() {
         // localStorage.setItem('orderData', btoa(JSON.stringify(data)));
         // router.push(data.redirect_url);
       } else {
-        if(data.message) {
+        if (data.message) {
           setError(data.message);
         }
-        if(data.products) {
+        if (data.products) {
           setError(data.products);
         }
-        if(data['billingAddress.first_name']) {
+        if (data['billingAddress.first_name']) {
           setError(data['billingAddress.first_name']);
         }
-        if(data['billingAddress.last_name']) {
+        if (data['billingAddress.last_name']) {
           setError(data['billingAddress.last_name']);
         }
-        if(data['billingAddress.email']) {
+        if (data['billingAddress.email']) {
           setError(data['billingAddress.email']);
         }
-        if(data['billingAddress.mobile']) {
+        if (data['billingAddress.mobile']) {
           setError(data['billingAddress.mobile']);
         }
-        if(data['billingAddress.area']) {
+        if (data['billingAddress.area']) {
           setError(data['billingAddress.area']);
         }
-        if(data['billingAddress.building']) {
+        if (data['billingAddress.building']) {
           setError(data['billingAddress.building']);
         }
-        if(data['billingAddress.governorate']) {
+        if (data['billingAddress.governorate']) {
           setError(data['billingAddress.governorate']);
         }
         setSuccess(null);
@@ -402,14 +402,14 @@ export default function Checkout() {
     // console.log('Mobile:', formData.billingAddress.mobile);
     // return;
     setIsSendOTPLoading(true);
-    if(formData.billingAddress.mobile == '') {
+    if (formData.billingAddress.mobile == '') {
       setOTPError('Mobile Number is Required');
       setOTPSuccess(null);
       setIsSendOTPLoading(false);
       return;
     }
     const regex = /^\d{10}$/;
-    if(!regex.test(formData.billingAddress.mobile)) {
+    if (!regex.test(formData.billingAddress.mobile)) {
       setOTPError('Invalid Mobile Number');
       setOTPSuccess(null);
       setIsSendOTPLoading(false);
@@ -418,29 +418,29 @@ export default function Checkout() {
     setOTPError(null);
     setIsSendOTPLoading(true);
     // return false;
-    
+
     try {
       const mobile = formData.billingAddress.mobile;
       const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}api/sendOTP`, {
         method: 'POST',
-        body: JSON.stringify({mobile}),
+        body: JSON.stringify({ mobile }),
         headers: {
           'Content-Type': 'application/json', // Specify the content type
         }
       })
- 
+
       if (!response.ok) {
         throw new Error('Failed to submit the data. Please try again.');
       }
- 
+
       // Handle response if necessary
       const data = await response.json();
-      if(data.message && data.message.split(' ')[0] == 'OTP') {
+      if (data.message && data.message.split(' ')[0] == 'OTP') {
         setOTPSuccess(data.message);
         setOTPError(null);
         setIsOTPButton(false);
       } else {
-        if(data['mobile']) {
+        if (data['mobile']) {
           setOTPSuccess(data['mobile']);
         }
         setOTPSuccess(null);
@@ -461,14 +461,14 @@ export default function Checkout() {
     // console.log('OTP:', formData.otp);
     // return;
     setIsSendOTPLoading(true);
-    if(formData.otp == '') {
+    if (formData.otp == '') {
       setOTPError('OTP is Required');
       setOTPSuccess(null);
       setIsSendOTPLoading(false);
       return;
     }
     const regex = /^\d+$/;
-    if(!regex.test(formData.otp)) {
+    if (!regex.test(formData.otp)) {
       setOTPError('Invalid OTP');
       setOTPSuccess(null);
       setIsSendOTPLoading(false);
@@ -477,37 +477,37 @@ export default function Checkout() {
     setOTPError(null);
     setIsSendOTPLoading(true);
     // return false;
-    
+
     try {
       const mobile = formData.billingAddress.mobile;
       const otp = formData.otp;
       const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}api/verifyOTP`, {
         method: 'POST',
-        body: JSON.stringify({mobile, otp, flag: 'checkout'}),
+        body: JSON.stringify({ mobile, otp, flag: 'checkout' }),
         headers: {
           'Content-Type': 'application/json', // Specify the content type
         }
       })
- 
+
       if (!response.ok) {
         throw new Error('Failed to submit the data. Please try again.');
       }
- 
+
       // Handle response if necessary
       const data = await response.json();
-      if(data.message && data.message.split(' ')[0] == 'Invalid') {
+      if (data.message && data.message.split(' ')[0] == 'Invalid') {
         setOTPSuccess(null);
         setOTPError(data.message);
-      } else if(data.message && data.message.split(' ')[0] == 'OTP') {
+      } else if (data.message && data.message.split(' ')[0] == 'OTP') {
         setOTPSuccess(data.message);
         setIsOTPVerified(true);
         setIsDisabled(false);
         setOTPError(null);
       } else {
-        if(data['mobile']) {
+        if (data['mobile']) {
           setOTPError(data['mobile']);
         }
-        if(data['otp']) {
+        if (data['otp']) {
           setOTPError(data['otp']);
         }
         setOTPSuccess(null);
@@ -535,7 +535,7 @@ export default function Checkout() {
 
   const applyCoupon = async (e) => {
     e.preventDefault();
-    if(couponCode == '') {
+    if (couponCode == '') {
       setCouponError('Coupon Code is Required');
       setCouponSuccess(null);
       setCouponDataContext(null);
@@ -544,19 +544,19 @@ export default function Checkout() {
 
     let product_coupon = false;
     cartProducts.map((item) => {
-      if(item.coupon?.code == couponCode) {
+      if (item.coupon?.code == couponCode) {
         product_coupon = true;
       }
     });
 
-    if(!product_coupon) {
+    if (!product_coupon) {
       setCouponError('Invalid Coupon Code for this products');
       setCouponSuccess(null);
       setCouponDataContext(null);
       setCouponCode('');
       return;
     }
-    else if(!isOTPVerified) {
+    else if (!isOTPVerified) {
       setCouponError('Verify Mobile Number First');
       setCouponSuccess(null);
       return;
@@ -573,7 +573,7 @@ export default function Checkout() {
 
       const data = await res.json();
 
-      if(data.message && data.message.split(' ')[0] == 'Details') {
+      if (data.message && data.message.split(' ')[0] == 'Details') {
         setCouponError(null);
         setCouponData(data.coupon);
         setCouponDataContext(data.coupon);
@@ -583,9 +583,9 @@ export default function Checkout() {
         setCouponData(null);
         setCouponDataContext(null);
         console.log(data);
-        if(data['couponCode']) {
+        if (data['couponCode']) {
           setCouponError(data['couponCode']);
-        } else if(data['mobile_number']) {
+        } else if (data['mobile_number']) {
           setCouponError(data['mobile_number']);
         } else {
           setCouponError(data.message);
@@ -603,7 +603,7 @@ export default function Checkout() {
     return <div><Pagination1 /></div>;
   }
   if (isMenuError) {
-    return <div>{ isMenuError }</div>;
+    return <div>{isMenuError}</div>;
   }
 
   const subTotalPrice = (elm) => {
@@ -611,12 +611,12 @@ export default function Checkout() {
     const currentUTC = new Date(); // Current UTC time
     const currentGST = new Date(currentUTC.getTime() + (4 * 60 * 60 * 1000)); // Add 4 hours for GST
     const current_date_time = currentGST.toISOString().slice(0, 19).replace("T", " ");
-     const bogoFreeQty = Number(elm.bogo_free_qty || 0);
+    const bogoFreeQty = Number(elm.bogo_free_qty || 0);
     const paidQty = Math.max(0, (elm.quantity || 0) - bogoFreeQty);
-    
+
     let itemPrice = elm.price;
-     if ( elm?.discount && new Date(current_date_time) >= new Date(elm.discount.start_date) && new Date(current_date_time) <= new Date(elm.discount.end_date)) {
-      if (elm.discount.discount_type == "percent") { itemPrice = elm.price - (elm.price / 100) * elm.discount.value; } 
+    if (elm?.discount && new Date(current_date_time) >= new Date(elm.discount.start_date) && new Date(current_date_time) <= new Date(elm.discount.end_date)) {
+      if (elm.discount.discount_type == "percent") { itemPrice = elm.price - (elm.price / 100) * elm.discount.value; }
       else if (elm.discount.discount_type == "amount") { itemPrice = elm.discount.final_price; }
       return (
         <td>
@@ -644,7 +644,7 @@ export default function Checkout() {
     //   )
     // }
     else if (couponData && couponData.type === "customer" && elm.is_coupon) {
-      if (couponData.coupon_type == "percent") { 
+      if (couponData.coupon_type == "percent") {
         itemPrice = elm.price - (elm.price / 100) * couponData.value;
       } else if (couponData.coupon_type == "amount") {
         itemPrice = elm.price - couponData.value;
@@ -656,108 +656,107 @@ export default function Checkout() {
         </td>
       );
     } else {
-      return <td>{(elm.price * elm.quantity).toFixed(currency.decimals)}{ currency.symbol }</td>;
+      return <td>{(elm.price * elm.quantity).toFixed(currency.decimals)}{currency.symbol}</td>;
     }
   };
 
   return (
     <>
-    <FreeGiftFeature couponData={couponData}/>
-    <BogoFeature />
-    {cartProducts.length ? (
-      <form onSubmit={onOrder}>
-        <div className="checkout-form">
-          <div className="billing-info__wrapper">
-            <h4>BILLING DETAILS</h4>
-            <div className="row">
-              <div className="col-md-6">
-                <div className="form-floating my-3">
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="checkout_first_name"
-                    placeholder="First Name"
-                    name="billingAddress.first_name"
-                    value={formData.billingAddress.first_name}
-                    onChange={handleChange}
-                    required
-                  />
-                  <label htmlFor="checkout_first_name">First Name</label>
+      <FreeGiftFeature couponData={couponData} />
+      <BogoFeature />
+      {cartProducts.length ? (
+        <form onSubmit={onOrder}>
+          <div className="checkout-form">
+            <div className="billing-info__wrapper">
+              <h4>BILLING DETAILS</h4>
+              <div className="row">
+                <div className="col-md-6">
+                  <div className="form-floating my-3">
+                    <input
+                      type="text"
+                      className="form-control"
+                      id="checkout_first_name"
+                      placeholder="First Name"
+                      name="billingAddress.first_name"
+                      value={formData.billingAddress.first_name}
+                      onChange={handleChange}
+                      required
+                    />
+                    <label htmlFor="checkout_first_name">First Name</label>
+                  </div>
                 </div>
-              </div>
-              <div className="col-md-6">
-                <div className="form-floating my-3">
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="checkout_last_name"
-                    placeholder="Last Name"
-                    name="billingAddress.last_name"
-                    value={formData.billingAddress.last_name}
-                    onChange={handleChange}
-                    required
-                  />
-                  <label htmlFor="checkout_last_name">Last Name</label>
+                <div className="col-md-6">
+                  <div className="form-floating my-3">
+                    <input
+                      type="text"
+                      className="form-control"
+                      id="checkout_last_name"
+                      placeholder="Last Name"
+                      name="billingAddress.last_name"
+                      value={formData.billingAddress.last_name}
+                      onChange={handleChange}
+                      required
+                    />
+                    <label htmlFor="checkout_last_name">Last Name</label>
+                  </div>
                 </div>
-              </div>
-              <div className="col-md-12">
-                <div className="search-field my-3">
-                  <div
-                    className={`form-label-fixed hover-container ${
-                      idDDActive ? "js-content_visible" : ""
-                    }`}
-                  >
-                    <label htmlFor="country" className="form-label">
-                      Country / Region*
-                    </label>
-                    <div className="js-hover__open">
-                      <input
-                        type="text"
-                        className="form-control form-control-lg search-field__actor"
-                        id="country"
-                        name="billingAddress.country"
-                        value="Kuwait"
-                        readOnly
-                        placeholder="Kuwait"
-                      />
+                <div className="col-md-12">
+                  <div className="search-field my-3">
+                    <div
+                      className={`form-label-fixed hover-container ${idDDActive ? "js-content_visible" : ""
+                        }`}
+                    >
+                      <label htmlFor="country" className="form-label">
+                        Country / Region*
+                      </label>
+                      <div className="js-hover__open">
+                        <input
+                          type="text"
+                          className="form-control form-control-lg search-field__actor"
+                          id="country"
+                          name="billingAddress.country"
+                          value="Kuwait"
+                          readOnly
+                          placeholder="Kuwait"
+                        />
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-              <div className="col-md-12">
-                <div className="form-floating mt-3 mb-3">
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="checkout_street_address"
-                    placeholder="Area / Mantaqa *"
-                    name="billingAddress.area"
-                    value={formData.billingAddress.area}
-                    onChange={handleChange}
-                    required
-                  />
-                  <label htmlFor="checkout_company_name">
-                    Area / Mantaqa *
-                  </label>
+                <div className="col-md-12">
+                  <div className="form-floating mt-3 mb-3">
+                    <input
+                      type="text"
+                      className="form-control"
+                      id="checkout_street_address"
+                      placeholder="Area / Mantaqa *"
+                      name="billingAddress.area"
+                      value={formData.billingAddress.area}
+                      onChange={handleChange}
+                      required
+                    />
+                    <label htmlFor="checkout_company_name">
+                      Area / Mantaqa *
+                    </label>
+                  </div>
+                  <div className="form-floating mt-3 mb-3">
+                    <input
+                      type="text"
+                      className="form-control"
+                      id="checkout_street_address_2"
+                      placeholder="Building / Villa / Apartment"
+                      name="billingAddress.building"
+                      value={formData.billingAddress.building}
+                      onChange={handleChange}
+                      required
+                    />
+                    <label htmlFor="checkout_company_name">
+                      Building / Villa / Apartment
+                    </label>
+                  </div>
                 </div>
-                <div className="form-floating mt-3 mb-3">
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="checkout_street_address_2"
-                    placeholder="Building / Villa / Apartment"
-                    name="billingAddress.building"
-                    value={formData.billingAddress.building}
-                    onChange={handleChange}
-                    required
-                  />
-                  <label htmlFor="checkout_company_name">
-                    Building / Villa / Apartment
-                  </label>
-                </div>
-              </div>
 
-              {/* <div className="col-md-12">
+                {/* <div className="col-md-12">
                 <div className="search-field my-3">
                   <div
                     className={`form-label-fixed hover-container ${
@@ -817,23 +816,23 @@ export default function Checkout() {
                 </div>
               </div> */}
 
-              <div className="col-md-12">
-                <div className="form-floating mt-3 mb-3">
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="checkout_governorate"
-                    placeholder="Governorate *"
-                    name="billingAddress.governorate"
-                    value={formData.billingAddress.governorate}
-                    onChange={handleChange}
-                    required
-                  />
-                  <label htmlFor="checkout_governorate">
-                    Governorate *
-                  </label>
-                </div>
-                {/* <div className="form-floating mt-3 mb-3">
+                <div className="col-md-12">
+                  <div className="form-floating mt-3 mb-3">
+                    <input
+                      type="text"
+                      className="form-control"
+                      id="checkout_governorate"
+                      placeholder="Governorate *"
+                      name="billingAddress.governorate"
+                      value={formData.billingAddress.governorate}
+                      onChange={handleChange}
+                      required
+                    />
+                    <label htmlFor="checkout_governorate">
+                      Governorate *
+                    </label>
+                  </div>
+                  {/* <div className="form-floating mt-3 mb-3">
                   <input
                     type="text"
                     className="form-control"
@@ -848,39 +847,39 @@ export default function Checkout() {
                     Building / Villa / Apartment
                   </label>
                 </div> */}
-              </div>
+                </div>
 
-              <div className="col-md-12">
-                <div className="form-floating my-3">
-                  <input
-                    type="email"
-                    className="form-control"
-                    id="billingAddress.email"
-                    placeholder="Your Mail *"
-                    name="billingAddress.email"
-                    value={formData.billingAddress.email}
-                    onChange={handleChange}
-                    required
-                  />
-                  <label htmlFor="checkout_email">Email Address *</label>
+                <div className="col-md-12">
+                  <div className="form-floating my-3">
+                    <input
+                      type="email"
+                      className="form-control"
+                      id="billingAddress.email"
+                      placeholder="Your Mail *"
+                      name="billingAddress.email"
+                      value={formData.billingAddress.email}
+                      onChange={handleChange}
+                      required
+                    />
+                    <label htmlFor="checkout_email">Email Address *</label>
+                  </div>
                 </div>
-              </div>
-              <div className="col-md-12">
-                <div className="form-floating my-3">
-                  <input
-                    type="text"
-                    pattern="^\d{8}$"
-                    title="Only positive integers allowed"
-                    className="form-control"
-                    id="checkout_otp"
-                    placeholder="Eg. 50000000 *"
-                    name="billingAddress.mobile"
-                    value={formData.billingAddress.mobile}
-                    onChange={handleChange}
-                    required
-                  />
-                  <label htmlFor="checkout_phone">Mobile Number (Eg. 50000000)*</label>
-                </div>
+                <div className="col-md-12">
+                  <div className="form-floating my-3">
+                    <input
+                      type="text"
+                      pattern="^\d{8}$"
+                      title="Only positive integers allowed"
+                      className="form-control"
+                      id="checkout_otp"
+                      placeholder="Eg. 50000000 *"
+                      name="billingAddress.mobile"
+                      value={formData.billingAddress.mobile}
+                      onChange={handleChange}
+                      required
+                    />
+                    <label htmlFor="checkout_phone">Mobile Number (Eg. 50000000)*</label>
+                  </div>
                   {/* {OTPError ? <div style={{ color: 'red' }}>{OTPError}</div> : <div style={{ color: 'green' }}>{OTPSuccess}</div>}
                   {isOTPButton ? <button
                     className="btn btn-primary w-100 text-uppercase"
@@ -909,91 +908,91 @@ export default function Checkout() {
                   >
                 {isSendOTPLoading ? 'Loading...' : 'Verify OTP'}
                 </button></>}</>} */}
-              </div>
-              <div className="col-md-12">
-                {!isLoggedIn && <div className="form-check mt-3">
-                  <input
-                    className="form-check-input form-check-input_fill"
-                    type="checkbox"
-                    defaultValue=""
-                    id="create_account"
-                    onClick={(prev) => setCreateAccount(!createAccount)}
-                    name="create_account"
-                  />
-                  <label className="form-check-label" htmlFor="create_account">
-                    CREATE AN ACCOUNT?
-                  </label>
-                </div>}
-                <div className="form-check mb-3">
-                  <input
-                    className="form-check-input form-check-input_fill"
-                    type="checkbox"
-                    defaultValue=""
-                    id="ship_different_address"
-                    onClick={handleCheckboxChange}
-                    name="shipping"
-                  />
-                  <label
-                    className="form-check-label"
-                    htmlFor="ship_different_address"
-                  >
-                    SHIP TO A DIFFERENT ADDRESS?
-                  </label>
+                </div>
+                <div className="col-md-12">
+                  {!isLoggedIn && <div className="form-check mt-3">
+                    <input
+                      className="form-check-input form-check-input_fill"
+                      type="checkbox"
+                      defaultValue=""
+                      id="create_account"
+                      onClick={(prev) => setCreateAccount(!createAccount)}
+                      name="create_account"
+                    />
+                    <label className="form-check-label" htmlFor="create_account">
+                      CREATE AN ACCOUNT?
+                    </label>
+                  </div>}
+                  <div className="form-check mb-3">
+                    <input
+                      className="form-check-input form-check-input_fill"
+                      type="checkbox"
+                      defaultValue=""
+                      id="ship_different_address"
+                      onClick={handleCheckboxChange}
+                      name="shipping"
+                    />
+                    <label
+                      className="form-check-label"
+                      htmlFor="ship_different_address"
+                    >
+                      SHIP TO A DIFFERENT ADDRESS?
+                    </label>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div className="col-md-12">
-              <div className="mt-3 mb-3">
-                <textarea
-                  className="form-control form-control_gray"
-                  placeholder="Order Notes (optional)"
-                  cols="30"
-                  rows="8"
-                  name="note"
-                  onChange={handleChange}
-                  value={ formData.note }
-                ></textarea>
+              <div className="col-md-12">
+                <div className="mt-3 mb-3">
+                  <textarea
+                    className="form-control form-control_gray"
+                    placeholder="Order Notes (optional)"
+                    cols="30"
+                    rows="8"
+                    name="note"
+                    onChange={handleChange}
+                    value={formData.note}
+                  ></textarea>
+                </div>
               </div>
+              {createAccount && <div className="col-md-12">
+                <div className="form-floating my-3">
+                  <input
+                    type="password"
+                    className="form-control"
+                    id="password"
+                    placeholder="Password *"
+                    name="password"
+                    value={formData.password}
+                    onChange={handleChange}
+                    required
+                  />
+                  <label htmlFor="checkout_email">Password *</label>
+                </div>
+              </div>}
             </div>
-            {createAccount && <div className="col-md-12">
-              <div className="form-floating my-3">
-                <input
-                  type="password"
-                  className="form-control"
-                  id="password"
-                  placeholder="Password *"
-                  name="password"
-                  value={formData.password}
-                  onChange={handleChange}
-                  required
-                />
-                <label htmlFor="checkout_email">Password *</label>
-              </div>
-            </div>}
-          </div>
-          <div className="checkout__totals-wrapper">
-            <div className="sticky-content">
-              <div className="checkout__totals">
-                <h3>Your Order</h3>
-                <table className="checkout-cart-items">
-                  <thead>
-                    <tr>
-                      <th>PRODUCT</th>
-                      <th>SUBTOTAL</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {cartProducts.map((elm, i) => (
-                      <tr key={i}>
-                        <td>
-                          {he.decode(elm.product_name)} x {elm.quantity}
-                        </td>
-                        {subTotalPrice(elm)}
+            <div className="checkout__totals-wrapper">
+              <div className="sticky-content">
+                <div className="checkout__totals">
+                  <h3>Your Order</h3>
+                  <table className="checkout-cart-items">
+                    <thead>
+                      <tr>
+                        <th>PRODUCT</th>
+                        <th>SUBTOTAL</th>
                       </tr>
-                    ))}
-                  </tbody>
-                </table>
-                 {/* {
+                    </thead>
+                    <tbody>
+                      {cartProducts.map((elm, i) => (
+                        <tr key={i}>
+                          <td>
+                            {he.decode(elm.product_name)} x {elm.quantity}
+                          </td>
+                          {subTotalPrice(elm)}
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                  {/* {
                     (() => {
                       // Only count non-excluded products
                       const regularProducts = cartProducts.filter((item) => item.category_name && !['gift sets', 'collections'].includes(item.category_name.toLowerCase()));
@@ -1016,46 +1015,46 @@ export default function Checkout() {
                       ) : null;
                     })()
                   } */}
-                <table className="checkout-totals">
-                  <tbody>
-                    <tr>
-                      <th>SUBTOTAL</th>
-                      <td>{totalPrice.toFixed(currency.decimals)}{ currency.symbol }</td>
-                    </tr>
-                    <tr>
-                      <th>SHIPPING</th>
-                      <td>{freeShippingFlag ? 'You Got Free Shipping' : `Shipping Cost: ${ shippingServiceCharges[0].price }${ currency.symbol}`}</td>
-                    </tr>
-                    {/* <tr>
+                  <table className="checkout-totals">
+                    <tbody>
+                      <tr>
+                        <th>SUBTOTAL</th>
+                        <td>{totalPrice.toFixed(currency.decimals)}{currency.symbol}</td>
+                      </tr>
+                      <tr>
+                        <th>SHIPPING</th>
+                        <td>{freeShippingFlag ? 'You Got Free Shipping' : `Shipping Cost: ${shippingServiceCharges[0].price}${currency.symbol}`}</td>
+                      </tr>
+                      {/* <tr>
                       <th>SERVICE FEE</th>
                       <td>{ shippingServiceCharges[1].price }{ currency.symbol }</td>
                     </tr> */}
-                    <tr>
-                      <th>TOTAL</th>
-                      <td>{!freeShippingFlag ? (parseFloat(shippingServiceCharges[0].price) + totalPrice + parseFloat(shippingServiceCharges[1].price)).toFixed(currency.decimals) :
-                          (0 + totalPrice + parseFloat(shippingServiceCharges[1].price)).toFixed(currency.decimals)}{ currency.symbol }
-                          (includes { !freeShippingFlag ? (
-                          (
-                            (parseFloat(shippingServiceCharges[0].price) - parseFloat(shippingServiceCharges[0].price) / (1 + parseFloat(vatTax.percentage / 100))) +
-                            (parseFloat(totalPrice) - parseFloat(totalPrice) / (1 + parseFloat(vatTax.percentage / 100))) +
-                            (parseFloat(shippingServiceCharges[1].price) - parseFloat(shippingServiceCharges[1].price) / (1 + parseFloat(vatTax.percentage / 100)))
-                          ).toFixed(currency.decimals)) : (
-                          (
-                            0 +
-                            (parseFloat(totalPrice) - parseFloat(totalPrice) / (1 + parseFloat(vatTax.percentage / 100))) +
-                            (parseFloat(shippingServiceCharges[1].price) - parseFloat(shippingServiceCharges[1].price) / (1 + parseFloat(vatTax.percentage / 100)))
-                          ).toFixed(currency.decimals)) }{ currency.symbol } VAT)
+                      <tr>
+                        <th>TOTAL</th>
+                        <td>{!freeShippingFlag ? (parseFloat(shippingServiceCharges[0].price) + totalPrice + parseFloat(shippingServiceCharges[1].price)).toFixed(currency.decimals) :
+                          (0 + totalPrice + parseFloat(shippingServiceCharges[1].price)).toFixed(currency.decimals)}{currency.symbol}
+                          (includes {!freeShippingFlag ? (
+                            (
+                              (parseFloat(shippingServiceCharges[0].price) - parseFloat(shippingServiceCharges[0].price) / (1 + parseFloat(vatTax.percentage / 100))) +
+                              (parseFloat(totalPrice) - parseFloat(totalPrice) / (1 + parseFloat(vatTax.percentage / 100))) +
+                              (parseFloat(shippingServiceCharges[1].price) - parseFloat(shippingServiceCharges[1].price) / (1 + parseFloat(vatTax.percentage / 100)))
+                            ).toFixed(currency.decimals)) : (
+                            (
+                              0 +
+                              (parseFloat(totalPrice) - parseFloat(totalPrice) / (1 + parseFloat(vatTax.percentage / 100))) +
+                              (parseFloat(shippingServiceCharges[1].price) - parseFloat(shippingServiceCharges[1].price) / (1 + parseFloat(vatTax.percentage / 100)))
+                            ).toFixed(currency.decimals))}{currency.symbol} VAT)
                         </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-              {/* <div > */}
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                {/* <div > */}
                 {/* <form
                   onSubmit={applyCoupon}
                   className="position-relative bg-body"
                 > */}
-                  {/* {couponError ? <div style={{ color: 'red' }}>{couponError}</div> : <div style={{ color: 'green' }}>{couponSuccess}</div>}
+                {/* {couponError ? <div style={{ color: 'red' }}>{couponError}</div> : <div style={{ color: 'green' }}>{couponSuccess}</div>}
                   <input
                     className="form-control"
                     type="text"
@@ -1080,195 +1079,211 @@ export default function Checkout() {
                 {/* </form> */}
                 {/* <br/> */}
                 {/* <button className="btn btn-light">UPDATE CART</button> */}
-              {/* </div> */}
-              <div className="checkout__payment-methods">
-                <div className="form-check">
-                  <input
-                    className="form-check-input form-check-input_fill"
-                    type="radio"
-                    name="checkout_payment_method"
-                    id="checkout_payment_method_3"
-                    value={'cod'}
-                    checked={selectedOption === 'cod'}
-                    onChange={handleRadioChange}
-                  />
-                  <label
-                    className="form-check-label"
-                    htmlFor="checkout_payment_method_3"
-                  >
-                    Cash on delivery
-                    {/* <span className="option-detail d-block">
+                {/* </div> */}
+                <div className="checkout__payment-methods">
+                  <div className="form-check">
+                    <input
+                      className="form-check-input form-check-input_fill"
+                      type="radio"
+                      name="checkout_payment_method"
+                      id="checkout_payment_method_3"
+                      value={'cod'}
+                      checked={selectedOption === 'cod'}
+                      onChange={handleRadioChange}
+                    />
+                    <label
+                      className="form-check-label"
+                      htmlFor="checkout_payment_method_3"
+                    >
+                      Cash on delivery
+                      {/* <span className="option-detail d-block">
                       Phasellus sed volutpat orci. Fusce eget lore mauris
                       vehicula elementum gravida nec dui. Aenean aliquam varius
                       ipsum, non ultricies tellus sodales eu. Donec dignissim
                       viverra nunc, ut aliquet magna posuere eget.
                     </span> */}
-                  </label>
-                </div>
-                <div className="form-check">
-                  <input
-                    className="form-check-input form-check-input_fill"
-                    type="radio"
-                    name="checkout_payment_method"
-                    id="checkout_payment_method_4"
-                    value={'tap'}
-                    checked={selectedOption === 'tap'}
-                    onChange={handleRadioChange}
-                  />
-                  <label
-                    className="form-check-label"
-                    htmlFor="checkout_payment_method_4"
-                  >
-                    Tap - Credit / Debit Card
-                    {/* <Image
-                      src="/assets/images/paymentGateway/tap-logo-white.svg"
-                      width="100"
-                      height="20"
-                      style={{ color: '#000' }}
-                      alt="Cropped Faux leather Jacket"
-                    /> */}
-                    <div className="payment-logos">
-                      <svg  width="70" height="20" xmlns="http://www.w3.org/2000/svg" id="Layer_1" viewBox="0 0 1679.5 696.5">
-                        <path style={{ fill: '#000', 'stroke-width': '0px' }} class="cls-1" d="M790.2,41h-52.6v105.3h-.1v44.9h.1v206.4c0,20.1.7,36,2.1,47.7,1.4,11.7,4.8,23.3,10.2,34.7,11.9,23.6,32.2,38.9,60.7,45.8,28.6,6.9,60.5,6.7,95.8-.5v-46c-29.2,4.7-52.6,5.3-70,1.8s-30.2-12.7-38.4-27.7c-3.7-6.6-6-13.8-6.8-21.9s-1.1-19.7-.9-34.9v-205.3h116.1v-44.9s-76.8,1.2-116.1,1.2h-13.7c-3.7,0-10,.5-10-1,0-7,23.7-2,23.7-11V41h-.1Z"/>
-                        <path style={{ fill: '#000', 'stroke-width': '0px' }} class="cls-1" d="M1264.6,246.4c-1.6-13-4.7-24.7-9.1-35.3-10.1-24.3-27.1-43-51.2-56-24.1-13-53.6-19.5-88.4-19.5s-75.6,9.3-101.9,27.9c-26.3,18.6-43.9,45-52.8,79.1l51.3,15.1c6.8-24.8,19-43.1,36.7-54.9,17.7-11.8,39.6-17.7,65.8-17.7s44.6,3.9,59.5,11.8c14.9,7.8,25.5,19.8,31.9,35.8,5.7,14.2,8.6,31.8,9,53.1-4.8.7-9.8,1.3-14.7,1.9-39.5,5.2-70.8,9.4-93.7,12.8-22.9,3.4-44.2,7.5-63.9,12.5-30.2,7.9-53.8,20.9-70.7,39-17,18-25.4,41.9-25.4,71.6s4.9,39.4,14.7,56.5,24.5,30.6,44,40.7c19.6,10,43.1,15.1,70.7,15.1s47.8-3.7,68.2-11.2c20.5-7.5,38.2-18.6,53.2-33.5,8.5-8.4,15.9-17.9,22.4-28.5l8.4-15.2c11.6,2.7-8.4,17.2-8.4,49s0,28.9,0,28.9h47v-235.1c0-16.1-.8-30.7-2.5-43.7h0l-.1-.2ZM1213.8,362.4c-.7,10.5-2.1,20.4-4.2,29.5-3.5,19.2-10.8,36.2-21.8,51-11,14.9-25.5,26.4-43.5,34.7-18,8.3-38.6,12.5-61.8,12.5s-35-3.2-47.4-9.5c-12.4-6.3-21.5-14.5-27.2-24.6-5.7-10-8.6-20.9-8.6-32.6,0-18.7,6.1-33.4,18.2-44,12.2-10.7,27.7-18.6,46.7-24,18-4.9,38.4-9,61.2-12.3,22.8-3.3,51.2-6.9,85.1-10.9l4.2-.5c0,11.5-.4,21.8-1,30.7h.1Z"/>
-                        <path style={{ fill: '#000', 'stroke-width': '0px' }} class="cls-1" d="M1659.5,233.1c-13.4-30.3-32.8-54.1-57.9-71.4-25.2-17.3-54.7-26-88.6-26s-64.3,8.6-89,25.6c-36.3,25.7-36.5,46.2-43,46.2s6.7-16,6.7-28.5v-32.7h-47.4v550.2h53v-189.4c0-25.5-12.5-33-6.3-35,6.2-2,13.9,21.4,36.6,37.6,24.4,17.4,53.6,26.1,87.5,26.1s64.6-8.6,90-26c25.4-17.3,44.8-41.2,58.2-71.6,13.4-30.4,20.2-64.7,20.2-102.8s-6.7-72-20.2-102.3h.2ZM1610.2,413.3c-8.9,22.9-22.2,40.9-39.8,54-17.7,13.1-39.2,19.7-64.7,19.7s-47.4-6.4-65.1-19.3c-17.7-12.9-30.9-30.7-39.7-53.5-8.8-22.8-13.2-49.1-13.2-78.8s4.3-56.5,13-78.9c8.6-22.4,21.8-40.1,39.3-52.8s39.1-19.1,64.6-19.1,48.2,6.5,66,19.5c17.8,13,31.1,30.9,39.8,53.7,8.8,22.8,13.2,48.7,13.2,77.7s-4.5,55-13.3,77.9h0l-.1-.1Z"/>
-                        <path style={{ fill: '#000', 'stroke-width': '0px' }} class="cls-1" d="M286.8,41c135.5,0,245.8,110.3,245.8,245.8s-110.3,245.8-245.8,245.8S41,422.3,41,286.8,151.2,41,286.8,41ZM286.8,0C128.4,0,0,128.4,0,286.8s128.4,286.8,286.8,286.8,286.8-128.4,286.8-286.8S445.1,0,286.8,0Z"/>
-                        <path style={{ fill: '#000', 'stroke-width': '0px' }} class="cls-1" d="M286.8,122.9c90.4,0,163.9,73.5,163.9,163.9s-73.5,163.9-163.9,163.9-163.9-73.5-163.9-163.9,73.5-163.9,163.9-163.9ZM286.8,81.9c-113.1,0-204.8,91.7-204.8,204.8s91.7,204.8,204.8,204.8,204.8-91.7,204.8-204.8-91.7-204.8-204.8-204.8Z"/>
-                      </svg>
-                      <svg xmlns="http://www.w3.org/2000/svg" width="70" height="20" viewBox="0 0 77 16" >
-                        <g transform="translate(-523 -415)">
-                          <rect style={{ fill: "#fff", opacity: 0 }} className="a" width="77" height="16" transform="translate(523 415)"/>
-                          <path style={{ fill: "#2a2a6c" }} className="b" d="M70.75,432.369l-5.76,13.746H61.23L58.4,435.145a1.522,1.522,0,0,0-.847-1.21,15.018,15.018,0,0,0-3.509-1.167l.087-.4h6.049a1.657,1.657,0,0,1,1.64,1.4l1.5,7.955,3.7-9.357H70.75m14.727,9.256c.017-3.625-5.017-3.823-4.98-5.446.009-.494.479-1.019,1.507-1.151a6.719,6.719,0,0,1,3.507.612l.624-2.912a9.55,9.55,0,0,0-3.325-.609c-3.515,0-5.989,1.869-6.009,4.543-.023,1.978,1.765,3.082,3.113,3.741,1.385.674,1.847,1.1,1.842,1.708-.008.923-1.1,1.325-2.126,1.344a7.433,7.433,0,0,1-3.654-.869l-.644,3.014a10.87,10.87,0,0,0,3.956.731c3.735,0,6.178-1.849,6.19-4.707m9.28,4.49h3.29l-2.87-13.746H92.14a1.624,1.624,0,0,0-1.514,1.007l-5.332,12.739h3.732l.741-2.053H94.33Zm-3.967-4.87,1.872-5.161,1.077,5.161Zm-14.959-8.875L72.89,446.114H69.334l2.942-13.746Z" transform="translate(470.495 -16.119)" />
-                          <g transform="translate(1.466 -18.353)">
-                            <rect style={{ fill: "#ff5f00" }} className="c" width="6.84" height="11.172" transform="translate(581.019 435.873)" />
-                            <path style={{ fill: "#eb001b" }} className="d" d="M16.226,14.558A7.093,7.093,0,0,1,18.94,8.973a7.1,7.1,0,1,0,0,11.172,7.093,7.093,0,0,1-2.714-5.587Z" transform="translate(565.497 426.902)" />
-                            <path style={{ fill: "#f79e1b" }} className="e" d="M119.946,64.636v-.229h.1V64.36h-.235v.047h.093v.229Zm.456,0V64.36h-.071l-.083.2-.083-.2h-.071v.276h.051v-.209l.077.18h.053l.077-.18v.209Z" transform="translate(475.307 381.226)" />
-                            <path style={{ fill: "#f79e1b" }} className="e" d="M77.186,14.547a7.1,7.1,0,0,1-11.5,5.585,7.1,7.1,0,0,0,0-11.172,7.1,7.1,0,0,1,11.5,5.585Z" transform="translate(518.747 426.913)"/>
-                          </g>
-                        </g>
-                      </svg> 
-                    </div>
-                  </label>
-                </div>
-                <div className="policy-text">
-                  Your personal data will be used to process your order, support
-                  your experience throughout this website, and for other
-                  purposes described in our
-                  <Link href={`/${locale}/privacy`} target="_blank">
-                    privacy policy
-                  </Link>
-                  .
-                </div><br/>
-                <input type="checkbox" required/>&nbsp;&nbsp;
+                    </label>
+                  </div>
+                  <div className="form-check">
+                    <input
+                      className="form-check-input form-check-input_fill"
+                      type="radio"
+                      name="checkout_payment_method"
+                      id="checkout_payment_method_4"
+                      value={'tap'}
+                      checked={selectedOption === 'tap'}
+                      onChange={handleRadioChange}
+                    />
+                    <label
+                      className="form-check-label"
+                      htmlFor="checkout_payment_method_4"
+                    >
+                      Tap - Credit / Debit Card
+                    </label>
+                  </div>
+                  <div className="payment-logos">
+                    <span className="payment-logos-title">Accepted Payment Methods - </span>
+                    <svg width="60" height="20" xmlns="http://www.w3.org/2000/svg" id="Layer_1" viewBox="0 0 1679.5 696.5">
+                      <path style={{ fill: '#000', strokeWidth: '0px' }} className="cls-1" d="M790.2,41h-52.6v105.3h-.1v44.9h.1v206.4c0,20.1.7,36,2.1,47.7,1.4,11.7,4.8,23.3,10.2,34.7,11.9,23.6,32.2,38.9,60.7,45.8,28.6,6.9,60.5,6.7,95.8-.5v-46c-29.2,4.7-52.6,5.3-70,1.8s-30.2-12.7-38.4-27.7c-3.7-6.6-6-13.8-6.8-21.9s-1.1-19.7-.9-34.9v-205.3h116.1v-44.9s-76.8,1.2-116.1,1.2h-13.7c-3.7,0-10,.5-10-1,0-7,23.7-2,23.7-11V41h-.1Z" />
+                      <path style={{ fill: '#000', strokeWidth: '0px' }} className="cls-1" d="M1264.6,246.4c-1.6-13-4.7-24.7-9.1-35.3-10.1-24.3-27.1-43-51.2-56-24.1-13-53.6-19.5-88.4-19.5s-75.6,9.3-101.9,27.9c-26.3,18.6-43.9,45-52.8,79.1l51.3,15.1c6.8-24.8,19-43.1,36.7-54.9,17.7-11.8,39.6-17.7,65.8-17.7s44.6,3.9,59.5,11.8c14.9,7.8,25.5,19.8,31.9,35.8,5.7,14.2,8.6,31.8,9,53.1-4.8.7-9.8,1.3-14.7,1.9-39.5,5.2-70.8,9.4-93.7,12.8-22.9,3.4-44.2,7.5-63.9,12.5-30.2,7.9-53.8,20.9-70.7,39-17,18-25.4,41.9-25.4,71.6s4.9,39.4,14.7,56.5,24.5,30.6,44,40.7c19.6,10,43.1,15.1,70.7,15.1s47.8-3.7,68.2-11.2c20.5-7.5,38.2-18.6,53.2-33.5,8.5-8.4,15.9-17.9,22.4-28.5l8.4-15.2c11.6,2.7-8.4,17.2-8.4,49s0,28.9,0,28.9h47v-235.1c0-16.1-.8-30.7-2.5-43.7h0l-.1-.2ZM1213.8,362.4c-.7,10.5-2.1,20.4-4.2,29.5-3.5,19.2-10.8,36.2-21.8,51-11,14.9-25.5,26.4-43.5,34.7-18,8.3-38.6,12.5-61.8,12.5s-35-3.2-47.4-9.5c-12.4-6.3-21.5-14.5-27.2-24.6-5.7-10-8.6-20.9-8.6-32.6,0-18.7,6.1-33.4,18.2-44,12.2-10.7,27.7-18.6,46.7-24,18-4.9,38.4-9,61.2-12.3,22.8-3.3,51.2-6.9,85.1-10.9l4.2-.5c0,11.5-.4,21.8-1,30.7h.1Z" />
+                      <path style={{ fill: '#000', strokeWidth: '0px' }} className="cls-1" d="M1659.5,233.1c-13.4-30.3-32.8-54.1-57.9-71.4-25.2-17.3-54.7-26-88.6-26s-64.3,8.6-89,25.6c-36.3,25.7-36.5,46.2-43,46.2s6.7-16,6.7-28.5v-32.7h-47.4v550.2h53v-189.4c0-25.5-12.5-33-6.3-35,6.2-2,13.9,21.4,36.6,37.6,24.4,17.4,53.6,26.1,87.5,26.1s64.6-8.6,90-26c25.4-17.3,44.8-41.2,58.2-71.6,13.4-30.4,20.2-64.7,20.2-102.8s-6.7-72-20.2-102.3h.2ZM1610.2,413.3c-8.9,22.9-22.2,40.9-39.8,54-17.7,13.1-39.2,19.7-64.7,19.7s-47.4-6.4-65.1-19.3c-17.7-12.9-30.9-30.7-39.7-53.5-8.8-22.8-13.2-49.1-13.2-78.8s4.3-56.5,13-78.9c8.6-22.4,21.8-40.1,39.3-52.8s39.1-19.1,64.6-19.1,48.2,6.5,66,19.5c17.8,13,31.1,30.9,39.8,53.7,8.8,22.8,13.2,48.7,13.2,77.7s-4.5,55-13.3,77.9h0l-.1-.1Z" />
+                      <path style={{ fill: '#000', strokeWidth: '0px' }} className="cls-1" d="M286.8,41c135.5,0,245.8,110.3,245.8,245.8s-110.3,245.8-245.8,245.8S41,422.3,41,286.8,151.2,41,286.8,41ZM286.8,0C128.4,0,0,128.4,0,286.8s128.4,286.8,286.8,286.8,286.8-128.4,286.8-286.8S445.1,0,286.8,0Z" />
+                      <path style={{ fill: '#000', strokeWidth: '0px' }} className="cls-1" d="M286.8,122.9c90.4,0,163.9,73.5,163.9,163.9s-73.5,163.9-163.9,163.9-163.9-73.5-163.9-163.9,73.5-163.9,163.9-163.9ZM286.8,81.9c-113.1,0-204.8,91.7-204.8,204.8s91.7,204.8,204.8,204.8,204.8-91.7,204.8-204.8-91.7-204.8-204.8-204.8Z" />
+                    </svg>
+                    <Image
+                      src="/assets/images/paymentGateway/knet-logo.png"
+                      width={40}
+                      height={24}
+                      alt="Knet"
+                      className="payment-logo-img"
+                    />
+                    <Image
+                      src="/assets/images/paymentGateway/visa-logo.png"
+                      width={40}
+                      height={24}
+                      alt="Visa"
+                      className="payment-logo-img"
+                    />
+                    <Image
+                      src="/assets/images/paymentGateway/master-card-logo.png"
+                      width={40}
+                      height={24}
+                      alt="Mastercard"
+                      className="payment-logo-img"
+                    />
+                    <Image
+                      src="/assets/images/paymentGateway/apple-pay-logo.png"
+                      width={40}
+                      height={24}
+                      alt="Apple Pay"
+                      className="payment-logo-img"
+                    />
+                    <Image
+                      src="/assets/images/paymentGateway/gpay-logo.png"
+                      width={40}
+                      height={24}
+                      alt="Google Pay"
+                      className="payment-logo-img"
+                    />
+                  </div>
+                  <div className="policy-text">
+                    Your personal data will be used to process your order, support
+                    your experience throughout this website, and for other
+                    purposes described in our
+                    <Link href={`/${locale}/privacy`} target="_blank">
+                      privacy policy
+                    </Link>
+                    .
+                  </div><br />
+                  <input type="checkbox" required />&nbsp;&nbsp;
                   <span>I have read and agree to the website <Link href="https://www.ahmedalmaghribi.com/terms-and-condition/" target="_blank">terms and conditions</Link> </span>*
+                </div>
+                {error ? <div style={{ color: 'red' }}>{error}</div> : <div style={{ color: 'green' }}>{success}</div>}
+                <button
+                  className="btn btn-primary w-100 text-uppercase"
+                  type="submit"
+                  disabled={isLoading}
+                >
+                  {isLoading ? 'Loading...' : 'Place Order'}
+                </button>
               </div>
-              {error ? <div style={{ color: 'red' }}>{error}</div> : <div style={{ color: 'green' }}>{success}</div>}
-              <button
-                className="btn btn-primary w-100 text-uppercase"
-                type="submit"
-                disabled={isLoading}
-              >
-                {isLoading ? 'Loading...' : 'Place Order'}
-              </button>
             </div>
           </div>
-        </div>
-      {/* </form> */}
+          {/* </form> */}
 
-      {formData.shippingAdd == true ? (
-        // <form className="col-md-8" onSubmit={(e) => e.preventDefault()}>
-          <div className="checkout-form">
-            <div className="billing-info__wrapper">
-              <h4>SHIPPING DETAILS</h4>
-              <div className="row">
-                <div className="col-md-6">
-                  <div className="form-floating my-3">
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="checkout_first_name"
-                      placeholder="First Name"
-                      name="shippingAddress.first_name"
-                      value={formData.shippingAddress.first_name}
-                      onChange={handleChange}
-                      required
-                    />
-                    <label htmlFor="checkout_first_name">First Name</label>
+          {formData.shippingAdd == true ? (
+            // <form className="col-md-8" onSubmit={(e) => e.preventDefault()}>
+            <div className="checkout-form">
+              <div className="billing-info__wrapper">
+                <h4>SHIPPING DETAILS</h4>
+                <div className="row">
+                  <div className="col-md-6">
+                    <div className="form-floating my-3">
+                      <input
+                        type="text"
+                        className="form-control"
+                        id="checkout_first_name"
+                        placeholder="First Name"
+                        name="shippingAddress.first_name"
+                        value={formData.shippingAddress.first_name}
+                        onChange={handleChange}
+                        required
+                      />
+                      <label htmlFor="checkout_first_name">First Name</label>
+                    </div>
                   </div>
-                </div>
-                <div className="col-md-6">
-                  <div className="form-floating my-3">
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="checkout_last_name"
-                      placeholder="Last Name"
-                      name="shippingAddress.last_name"
-                      value={formData.shippingAddress.last_name}
-                      onChange={handleChange}
-                      required
-                    />
-                    <label htmlFor="checkout_last_name">Last Name</label>
+                  <div className="col-md-6">
+                    <div className="form-floating my-3">
+                      <input
+                        type="text"
+                        className="form-control"
+                        id="checkout_last_name"
+                        placeholder="Last Name"
+                        name="shippingAddress.last_name"
+                        value={formData.shippingAddress.last_name}
+                        onChange={handleChange}
+                        required
+                      />
+                      <label htmlFor="checkout_last_name">Last Name</label>
+                    </div>
                   </div>
-                </div>
-                <div className="col-md-12">
-                  <div className="search-field my-3">
-                    <div
-                      className={`form-label-fixed hover-container ${
-                        idDDActive ? "js-content_visible" : ""
-                      }`}
-                    >
-                      <label htmlFor="country" className="form-label">
-                        Country / Region*
-                      </label>
-                      <div className="js-hover__open">
-                        <input
-                          type="text"
-                          className="form-control form-control-lg search-field__actor"
-                          id="country"
-                          name="shippingAddress.country"
-                          value="Kuwait"
-                          readOnly
-                          placeholder="Kuwait"
-                        />
+                  <div className="col-md-12">
+                    <div className="search-field my-3">
+                      <div
+                        className={`form-label-fixed hover-container ${idDDActive ? "js-content_visible" : ""
+                          }`}
+                      >
+                        <label htmlFor="country" className="form-label">
+                          Country / Region*
+                        </label>
+                        <div className="js-hover__open">
+                          <input
+                            type="text"
+                            className="form-control form-control-lg search-field__actor"
+                            id="country"
+                            name="shippingAddress.country"
+                            value="Kuwait"
+                            readOnly
+                            placeholder="Kuwait"
+                          />
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
-                <div className="col-md-12">
-                  <div className="form-floating mt-3 mb-3">
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="checkout_street_address"
-                      placeholder="Address *"
-                      name="shippingAddress.area"
-                      value={formData.shippingAddress.area}
-                      onChange={handleChange}
-                      required
-                    />
-                    <label htmlFor="checkout_company_name">
-                      Area / Mantaqa *
-                    </label>
+                  <div className="col-md-12">
+                    <div className="form-floating mt-3 mb-3">
+                      <input
+                        type="text"
+                        className="form-control"
+                        id="checkout_street_address"
+                        placeholder="Address *"
+                        name="shippingAddress.area"
+                        value={formData.shippingAddress.area}
+                        onChange={handleChange}
+                        required
+                      />
+                      <label htmlFor="checkout_company_name">
+                        Area / Mantaqa *
+                      </label>
+                    </div>
+                    <div className="form-floating mt-3 mb-3">
+                      <input
+                        type="text"
+                        className="form-control"
+                        id="checkout_street_address_2"
+                        placeholder="Building / Villa / Apartment"
+                        name="shippingAddress.building"
+                        value={formData.shippingAddress.building}
+                        onChange={handleChange}
+                        required
+                      />
+                      <label htmlFor="checkout_company_name">
+                        Building / Villa / Apartment
+                      </label>
+                    </div>
                   </div>
-                  <div className="form-floating mt-3 mb-3">
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="checkout_street_address_2"
-                      placeholder="Building / Villa / Apartment"
-                      name="shippingAddress.building"
-                      value={formData.shippingAddress.building}
-                      onChange={handleChange}
-                      required
-                    />
-                    <label htmlFor="checkout_company_name">
-                      Building / Villa / Apartment
-                    </label>
-                  </div>
-                </div>
 
-                {/* <div className="col-md-12">
+                  {/* <div className="col-md-12">
                   <div className="search-field my-3">
                     <div
                       className={`form-label-fixed hover-container ${
@@ -1328,23 +1343,23 @@ export default function Checkout() {
                   </div>
                 </div> */}
 
-                <div className="col-md-12">
-                  <div className="form-floating mt-3 mb-3">
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="checkout_governorate"
-                      placeholder="Governorate *"
-                      name="shippingAddress.governorate"
-                      value={formData.shippingAddress.governorate}
-                      onChange={handleChange}
-                      required
-                    />
-                    <label htmlFor="checkout_governorate">
-                      Governorate *
-                    </label>
-                  </div>
-                  {/* <div className="form-floating mt-3 mb-3">
+                  <div className="col-md-12">
+                    <div className="form-floating mt-3 mb-3">
+                      <input
+                        type="text"
+                        className="form-control"
+                        id="checkout_governorate"
+                        placeholder="Governorate *"
+                        name="shippingAddress.governorate"
+                        value={formData.shippingAddress.governorate}
+                        onChange={handleChange}
+                        required
+                      />
+                      <label htmlFor="checkout_governorate">
+                        Governorate *
+                      </label>
+                    </div>
+                    {/* <div className="form-floating mt-3 mb-3">
                     <input
                       type="text"
                       className="form-control"
@@ -1359,45 +1374,45 @@ export default function Checkout() {
                       Building / Villa / Apartment
                     </label>
                   </div> */}
-                </div>
-
-                <div className="col-md-12">
-                  <div className="form-floating my-3">
-                    <input
-                      type="email"
-                      className="form-control"
-                      id="checkout_email"
-                      placeholder="Your Mail *"
-                      name="shippingAddress.email"
-                      value={formData.shippingAddress.email}
-                      onChange={handleChange}
-                      required
-                    />
-                    <label htmlFor="checkout_email">Email Address *</label>
                   </div>
-                </div>
-                <div className="col-md-12">
-                  <div className="form-floating my-3">
-                    <input
-                      type="text"
-                      pattern="^\d{8}$"
-                      title="Only positive integers allowed"
-                      className="form-control"
-                      id="checkout_phone"
-                      placeholder="Eg. 50000000 *"
-                      name="shippingAddress.mobile"
-                      value={formData.shippingAddress.mobile}
-                      onChange={handleChange}
-                      required
-                    />
-                    <label htmlFor="checkout_phone">Phone (Eg. 50000000)*</label>
+
+                  <div className="col-md-12">
+                    <div className="form-floating my-3">
+                      <input
+                        type="email"
+                        className="form-control"
+                        id="checkout_email"
+                        placeholder="Your Mail *"
+                        name="shippingAddress.email"
+                        value={formData.shippingAddress.email}
+                        onChange={handleChange}
+                        required
+                      />
+                      <label htmlFor="checkout_email">Email Address *</label>
+                    </div>
+                  </div>
+                  <div className="col-md-12">
+                    <div className="form-floating my-3">
+                      <input
+                        type="text"
+                        pattern="^\d{8}$"
+                        title="Only positive integers allowed"
+                        className="form-control"
+                        id="checkout_phone"
+                        placeholder="Eg. 50000000 *"
+                        name="shippingAddress.mobile"
+                        value={formData.shippingAddress.mobile}
+                        onChange={handleChange}
+                        required
+                      />
+                      <label htmlFor="checkout_phone">Phone (Eg. 50000000)*</label>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-      ) : null}
-      </form>
+          ) : null}
+        </form>
       ) : (
         <>
           <div className="fs-20">Shop cart is empty</div>
