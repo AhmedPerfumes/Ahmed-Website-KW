@@ -13,7 +13,7 @@ export default function CartDrawer() {
   const { isLoading: isMenuLoading, error: isMenuError, currency } = useMenu();
   const locale = useLocale();
   const [error, setError] = useState(null);
-  const { cartProducts, setCartProducts, totalPrice } = useContextElement();
+  const { cartProducts, setCartProducts, totalPrice, rawSubtotal, cashbackDiscountAmount, appliedCashbackRule } = useContextElement();
   const pathname = usePathname();
   const closeCart = () => {
     document
@@ -109,6 +109,14 @@ export default function CartDrawer() {
       }
     } else if(elm?.sale_price) {
       return <span className="cart-drawer-item__price money price">{((elm.sale_price) * elm.quantity).toFixed(currency.decimals)}{ currency.symbol }</span>;
+    } else if (appliedCashbackRule && !elm.is_gift && !elm.discount && (appliedCashbackRule.product_type === 'all' || (appliedCashbackRule.product_ids || []).includes(elm.product_id))) {
+      const discounted = elm.price - (elm.price / 100 * Number(appliedCashbackRule.cashback_percentage || 0));
+      return (
+        <>
+          <span className="money price price-old">{currency.symbol}{elm?.price}</span>
+          <span className="cart-drawer-item__price money price price-sale">{(discounted * elm.quantity).toFixed(currency.decimals)}{ currency.symbol }</span>
+        </>
+      );
     } else {
       return <span className="cart-drawer-item__price money price">{(elm.price * elm.quantity).toFixed(currency.decimals)}{ currency.symbol }</span>;
     }
@@ -153,6 +161,11 @@ export default function CartDrawer() {
                   <div className="cart-drawer-item__info flex-grow-1">
                     <h6 className="cart-drawer-item__title fw-normal">
                       {elm?.product_name && he.decode(elm.product_name)}
+                      {appliedCashbackRule && !elm.is_gift && !elm.discount && (appliedCashbackRule.product_type === 'all' || (appliedCashbackRule.product_ids || []).includes(elm.product_id)) && (
+                        <span className="badge bg-success-subtle text-success ms-1" style={{ fontSize: '11px' }}>
+                          {appliedCashbackRule.cashback_percentage}% Off
+                        </span>
+                      )}
                     </h6>
                     {/* <p className="cart-drawer-item__option text-secondary">
                       Color: Yellow
