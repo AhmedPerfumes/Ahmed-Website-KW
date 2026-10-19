@@ -15,7 +15,7 @@ export default function Cart() {
   // const [couponCode, setCouponCode] = useState("");
   // const [couponError, setCouponError] = useState(null);
   // const [couponSuccess, setCouponSuccess] = useState(null);
-  const { cartProducts, setCartProducts, totalPrice, freeShippingFlag } = useContextElement();
+  const { cartProducts, setCartProducts, totalPrice, rawSubtotal, freeShippingFlag, cashbackDiscountAmount, appliedCashbackRule } = useContextElement();
   // const setQuantity = async (id, quantity, productQty) => {
   //   if (quantity >= 1 && quantity <= productQty) {
   //     setError(null);
@@ -142,6 +142,9 @@ export default function Cart() {
       }
     } else if(elm?.sale_price) {
       return <span className="shopping-cart__subtotal">{((elm.sale_price) * elm.quantity)}{ currency.symbol }</span>;
+    } else if (appliedCashbackRule && !elm.is_gift && !elm.discount && (appliedCashbackRule.product_type === 'all' || (appliedCashbackRule.product_ids || []).includes(elm.product_id))) {
+      const discounted = elm.price - (elm.price / 100 * Number(appliedCashbackRule.cashback_percentage || 0));
+      return <span className="shopping-cart__subtotal">{(discounted * elm.quantity).toFixed(currency.decimals)}{ currency.symbol }</span>;
     } else {
       return <span className="shopping-cart__subtotal">{(elm.price * elm.quantity).toFixed(currency.decimals)}{ currency.symbol }</span>;
     }
@@ -156,6 +159,19 @@ export default function Cart() {
       }
     } else if(elm?.sale_price) {
       return <span className="shopping-cart__product-price">{(elm.sale_price)}{ currency.symbol }</span>;
+    } else if (appliedCashbackRule && !elm.is_gift && !elm.discount && (appliedCashbackRule.product_type === 'all' || (appliedCashbackRule.product_ids || []).includes(elm.product_id))) {
+      const discounted = elm.price - (elm.price / 100 * Number(appliedCashbackRule.cashback_percentage || 0));
+      return (
+        <>
+          <span className="price price-sale">
+            {currency.symbol}{discounted.toFixed(currency.decimals)}
+          </span>
+          <span className="money price price-old">
+            {currency.symbol}{elm?.price}
+          </span>
+          <br /><span style={{ color: '#28a745', fontWeight: 'bold', fontSize: '11px' }}>🏷️ {appliedCashbackRule.cashback_percentage}% Off</span>
+        </>
+      );
     } else {
       return <span className="shopping-cart__product-price">{elm.price}{ currency.symbol }</span>;
     }

@@ -83,11 +83,30 @@ export default function Context({ children }) {
   const [wishList, setWishList] = useState([]);
   const [quickViewItem, setQuickViewItem] = useState(allProducts[0]);
   const [totalPrice, setTotalPrice] = useState(0);
+  const [rawSubtotal, setRawSubtotal] = useState(0);
+  const [cashbackRulesContext, setCashbackRulesContext] = useState([]);
+  const [cashbackDiscountAmount, setCashbackDiscountAmount] = useState(0);
+  const [appliedCashbackRule, setAppliedCashbackRule] = useState(null);
   const [freeShippingFlag, setFreeShippingFlag] = useState(false);
   const [orderDetails, setOrderDetails] = useState({});
   const [couponDataContext, setCouponDataContext] = useState(null);
   const[promotionsContext, setPromotionsContext] = useState([]);
    const { shippingServiceCharges } = useMenu() ;
+
+  useEffect(() => {
+    const fetchCashbackRules = async () => {
+      try {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}api/cashbackRules`);
+        if (!response.ok) return;
+        const data = await response.json();
+        setCashbackRulesContext(data.cashbackRules || []);
+      } catch (error) {
+        console.error("Failed to fetch cashback rules", error);
+      }
+    };
+    fetchCashbackRules();
+  }, []);
+
 
   // useEffect(() => {
   //   const currentUTC = new Date(); // Current UTC time
@@ -171,13 +190,57 @@ export default function Context({ children }) {
       return accumulator + paidQty * basePrice;
     }, 0);
 
-    setTotalPrice(subtotal);
+    // 3. Check Cashback / Quantity-based Subtotal Discount
+    let totalCashbackDiscount = 0;
+    let matchingRule = null;
+
+    if (cashbackRulesContext && cashbackRulesContext.length > 0) {
+      for (const rule of cashbackRulesContext) {
+        const eligibleItems = state.products.filter((p) => {
+          if (p.is_gift) return false;
+          if (rule.product_type === 'group') {
+            return (rule.product_ids || []).includes(p.product_id);
+          }
+          return true; // 'all'
+        });
+
+        const eligibleQty = eligibleItems.reduce((acc, p) => {
+          const bogoFreeQty = Number(p?.bogo_free_qty || 0);
+          const paidQty = Math.max(0, Number(p?.quantity || 0) - bogoFreeQty);
+          return acc + paidQty;
+        }, 0);
+
+        if (eligibleQty >= Number(rule.min_qty || 1) && Number(rule.cashback_percentage || 0) > 0) {
+          matchingRule = rule;
+          const percent = Number(rule.cashback_percentage);
+
+          // Calculate subtotal of eligible items that do not have individual discounts
+          const eligibleSubtotal = eligibleItems.reduce((acc, p) => {
+            if (p.discount) return acc;
+            const bogoFreeQty = Number(p?.bogo_free_qty || 0);
+            const paidQty = Math.max(0, Number(p?.quantity || 0) - bogoFreeQty);
+            const basePrice = Number(p?.price || 0);
+            return acc + paidQty * basePrice;
+          }, 0);
+
+          totalCashbackDiscount = Number(((eligibleSubtotal * percent) / 100).toFixed(3));
+          break;
+        }
+      }
+    }
+
+    const finalSubtotal = Math.max(0, Number((subtotal - totalCashbackDiscount).toFixed(3)));
+
+    setRawSubtotal(Number(subtotal.toFixed(3)));
+    setTotalPrice(finalSubtotal);
+    setCashbackDiscountAmount(totalCashbackDiscount);
+    setAppliedCashbackRule(matchingRule);
     
     // Oman static free shipping threshold (20) based on your original commented code
     // setFreeShippingFlag(Number(subtotal.toFixed(3)) >= 20);
     const freeShippingThreshold = shippingServiceCharges?.[2]?.price ?? 6;
-    setFreeShippingFlag(Number(subtotal.toFixed(3)) >= freeShippingThreshold);
-  }, [state.products, couponDataContext, promotionsContext]);
+    setFreeShippingFlag(Number(finalSubtotal.toFixed(3)) >= freeShippingThreshold);
+  }, [state.products, couponDataContext, promotionsContext, cashbackRulesContext, shippingServiceCharges]);
   // -----------------------------------------------
 
   const addProductToQuickView = (product) => {
@@ -343,6 +406,7 @@ export default function Context({ children }) {
    cartProducts: state.products,
     setCartProducts,
     totalPrice,
+    rawSubtotal,
     addProductToCart,
     isAddedToCartProducts,
     toggleWishlist,
@@ -358,6 +422,9 @@ export default function Context({ children }) {
     setCouponDataContext,
     promotionsContext,      // Added so the app can read active promotions
     setPromotionsContext  ,  // Added so the app can set active promotions
+    cashbackRulesContext,
+    cashbackDiscountAmount,
+    appliedCashbackRule,
     removeGiftFromCart
   };
   return (

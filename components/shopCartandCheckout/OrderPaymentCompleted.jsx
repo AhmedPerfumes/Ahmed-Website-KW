@@ -18,34 +18,71 @@ export default function OrderPaymentCompleted({ orderDetails }) {
   }, []);
 
   const subTotalPrice = (elm) => {
-    if (elm.is_gift) {
-      console.log('FREE');
-      return <td>0.000{currency.symbol} (Free Gift)</td>;
-    }
     const currentUTC = new Date(); // Current UTC time
     const currentGST = new Date(currentUTC.getTime() + (4 * 60 * 60 * 1000)); // Add 4 hours for GST
     const current_date_time = currentGST.toISOString().slice(0, 19).replace("T", " ");
-    if(elm?.discount_percent) {
-      console.log('...', elm.discount_percent);
-      // console.log('...', new Date(current_date_time), new Date(elm.discount.start_date));
-      // if(new Date(current_date_time) >= new Date(elm.discount.start_date) && new Date(current_date_time) <= new Date(elm.discount.end_date)) {
-        // console.log('if...');
-        return <td>{(((elm.price * 1) - ((elm.price * 1) / 100 * elm.discount_percent)) * elm.qty).toFixed(currency.decimals)}{ currency.symbol }</td>;
-      // } else {
-      //   console.log('else...');
-      //   return <td>{(elm.price * elm.qty).toFixed(currency.decimals)}{ currency.symbol }</td>;
-      // }
-    } else if(elm?.coupon) {
-        console.log('else if');
-        return <td>{((elm.price - (elm.price / 100 * elm.coupon.value)) * elm.quantity).toFixed(currency.decimals)}{ currency.symbol }</td>;
-    } else if(elm?.sale_price) {
-        return <td>{(((elm.price * 1) - (elm.sale_price)) * elm.qty).toFixed(currency.decimals)}{ currency.symbol }</td>;
+
+    const qty = Number(elm.qty || elm.quantity || 1);
+    const unitPrice = Number(elm.price * 1);
+    const originalTotal = (unitPrice * qty).toFixed(currency.decimals);
+
+    if (elm.is_gift) {
+      return (
+        <td>
+          <span className="money price price-sale">{currency.symbol} 0.00</span>
+          <span className="money price price-old">{currency.symbol} {originalTotal}</span>
+          <br /><span style={{ color: '#28a745', fontWeight: 'bold', fontSize: '12px' }}>🎁 Free Gift</span>
+        </td>
+      );
+    }
+
+    if (elm?.discount_percent && Number(elm.discount_percent) > 0) {
+      const itemPrice = unitPrice - (unitPrice / 100 * Number(elm.discount_percent));
+      return (
+        <td>
+          <span className="money price price-sale">{currency.symbol} {(itemPrice * qty).toFixed(currency.decimals)}</span>
+          <span className="money price price-old">{currency.symbol} {originalTotal}</span>
+          <br /><span style={{ color: '#28a745', fontWeight: 'bold', fontSize: '12px' }}>🏷️ {elm.discount_percent}% Off {elm.campaign ? `(${elm.campaign})` : ''}</span>
+        </td>
+      );
+    } else if (elm?.discount_amount && Number(elm.discount_amount) > 0) {
+      const saleTotal = Math.max(0, (unitPrice * qty) - Number(elm.discount_amount)).toFixed(currency.decimals);
+      return (
+        <td>
+          <span className="money price price-sale">{currency.symbol} {saleTotal}</span>
+          <span className="money price price-old">{currency.symbol} {originalTotal}</span>
+          {elm.campaign && (
+            <>
+              <br /><span style={{ color: '#28a745', fontWeight: 'bold', fontSize: '12px' }}>🏷️ ({elm.campaign})</span>
+            </>
+          )}
+        </td>
+      );
+    } else if (elm?.coupon) {
+      const couponValue = Number(elm.coupon.value || 0);
+      const discountedUnitPrice = unitPrice - (unitPrice / 100 * couponValue);
+      const saleTotal = (discountedUnitPrice * qty).toFixed(currency.decimals);
+      return (
+        <td>
+          <span className="money price price-sale">{currency.symbol} {saleTotal}</span>
+          <span className="money price price-old">{currency.symbol} {originalTotal}</span>
+          {elm.coupon.code && (
+            <>
+              <br /><span style={{ color: '#28a745', fontWeight: 'bold', fontSize: '12px' }}>🏷️ {couponValue}% Off ({elm.coupon.code.toUpperCase()})</span>
+            </>
+          )}
+        </td>
+      );
+    } else if (elm?.sale_price) {
+      const itemPrice = unitPrice - (unitPrice / 100 * Number(elm.sale_price));
+      return (
+        <td>
+          <span className="money price price-sale">{currency.symbol} {(itemPrice * qty).toFixed(currency.decimals)}</span>
+          <span className="money price price-old">{currency.symbol} {originalTotal}</span>
+        </td>
+      );
     } else {
-        console.log('else');
-        if(elm?.product_category && elm.product_category == 'Collections') {
-          return <td>{ elm.gross_amount }{ currency.symbol }</td>;
-        }
-        return <td>{((elm.price * 1) * elm.qty).toFixed(2)}{ currency.symbol }</td>;
+      return <td>{originalTotal}{ currency.symbol }</td>;
     }
   };
 
