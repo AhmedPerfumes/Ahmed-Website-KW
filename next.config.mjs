@@ -5,19 +5,13 @@ const withNextIntl = createNextIntlPlugin();
 const nextConfig = {
     reactStrictMode: false,
     images: {
-        remotePatterns: [
-          {
-            protocol: 'https',
-            hostname: 'phpstack-1406565-5230671.cloudwaysapps.com',
-          },
-          {
-            protocol: 'https',
-            hostname: 'adminkw.ahmedalmaghribi.com',
-          },
-          {
-            protocol: 'http',
-            hostname: 'localhost',
-          }
+      dangerouslyAllowSVG: true,
+      remotePatterns:
+         [
+          { protocol: 'https', hostname: 'flagcdn.com' },
+          { protocol: 'https', hostname: 'phpstack-1406565-5230671.cloudwaysapps.com', },
+          { protocol: 'https', hostname: 'adminkw.ahmedalmaghribi.com', },
+          { protocol: 'http', hostname: 'localhost', }
         ],
       },
       productionBrowserSourceMaps: true,
